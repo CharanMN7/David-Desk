@@ -3,6 +3,8 @@ import {
   Cog,
   FlaskConical,
   LayoutDashboard,
+  MessageSquare,
+  Notebook,
   Package,
   ShoppingCart,
 } from "lucide-react";
@@ -22,19 +24,14 @@ const pages: PageRouteData[] = [
     label: "Dashboard",
   },
   {
-    route: "/inventory",
-    icon: <Package className="sidebar-btn-icon" />,
-    label: "Inventory",
+    route: "/notes",
+    icon: <Notebook className="sidebar-btn-icon" />,
+    label: "Notes",
   },
   {
-    route: "/all-labs",
-    icon: <FlaskConical className="sidebar-btn-icon" />,
-    label: "All Labs",
-  },
-  {
-    route: "/orders",
-    icon: <ShoppingCart className="sidebar-btn-icon" />,
-    label: "Orders",
+    route: "/chat",
+    icon: <MessageSquare className="sidebar-btn-icon" />,
+    label: "Chat",
   },
 ];
 
@@ -48,8 +45,7 @@ export const Sidebar = () => {
             key={page.route + index}
             href={page.route}
             className={`sidebar-btn ${
-              path.includes(page.label.toLowerCase()) ||
-              path.includes(page.label.toLowerCase().split(" ")[1])
+              path.includes(page.label.toLowerCase())
                 ? "sidebar-btn-active"
                 : ""
             }`}
@@ -62,7 +58,7 @@ export const Sidebar = () => {
 
       <div className="sidebar-bottom">
         <Link
-          href=""
+          href="/settings"
           className={`sidebar-btn ${
             path.includes("settings") ? "sidebar-btn-active" : ""
           }`}
