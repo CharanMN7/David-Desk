@@ -1,0 +1,33 @@
+.navbar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  border-bottom: 1px dashed #00000044;
+
+  > h1 {
+    font-weight: 600;
+  }
+}
+
+.nav-btns {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-btns > a {
+  display: block;
+  padding: 0.25rem;
+  border-radius: 2rem;
+}
+
+.nav-btns > a:hover {
+  background-color: #00000015;
+}
+
+.nav-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
