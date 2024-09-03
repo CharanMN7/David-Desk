@@ -1,4 +1,10 @@
+import { PageLayout } from "../components/layouts/page-layout/PageLayout";
+
 const ChatScreen = () => {
-  return <div>ChatScreen</div>;
+  return (
+    <PageLayout heading="David's here!">
+      <></>
+    </PageLayout>
+  );
 };
 export default ChatScreen;
