@@ -1,0 +1,27 @@
+.page-layout {
+  overflow-y: scroll;
+
+  > h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 1rem auto;
+  }
+}
+
+.nav-paths {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.path-nav-item {
+  text-decoration: underline;
+  text-transform: capitalize;
+  color: #007fff;
+}
+
+.active-path {
+  text-decoration: none;
+  text-transform: capitalize;
+  color: black;
+}
