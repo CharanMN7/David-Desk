@@ -1,0 +1,11 @@
+.main-app {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 3.5rem);
+  display: grid;
+  grid-template-columns: 200px 1fr;
+
+  > main {
+    padding: 1rem;
+  }
+}
