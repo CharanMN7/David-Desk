@@ -1,11 +1,9 @@
 .main-app {
-  display: flex;
-  flex-direction: column;
-  height: calc(100vh - 3.5rem);
-  display: grid;
-  grid-template-columns: 200px 1fr;
+  flex: 1;
+  overflow-y: scroll;
 
   > main {
     padding: 1rem;
+    margin: 3.75rem 0 0 200px;
   }
 }

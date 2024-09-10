@@ -1,12 +1,11 @@
 "use client";
 import {
   Cog,
-  FlaskConical,
   LayoutDashboard,
+  ListChecks,
   MessageSquare,
   Notebook,
-  Package,
-  ShoppingCart,
+  StickyNote,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -32,6 +31,16 @@ const pages: PageRouteData[] = [
     route: "/chat",
     icon: <MessageSquare className="sidebar-btn-icon" />,
     label: "Chat",
+  },
+  {
+    route: "/assignments",
+    icon: <StickyNote className="sidebar-btn-icon" />,
+    label: "Assignments",
+  },
+  {
+    route: "/todo",
+    icon: <ListChecks className="sidebar-btn-icon" />,
+    label: "To Do",
   },
 ];
 
