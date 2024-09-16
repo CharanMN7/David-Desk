@@ -6,8 +6,11 @@
 @import url("./components/styles/baselayout.module.css");
 @import url("./components/styles/sidebar.module.css");
 @import url("./components/styles/pagelayout.module.css");
+@import url("./components/styles/section.module.css");
+@import url("./components/styles/progresscard.module.css");
+
+@import url("./dashboard/dashboard.module.css");
 
 body {
-  overflow: hidden;
-  height: 100vh;
+  height: 100%;
 }

@@ -22,26 +22,6 @@ const pages: PageRouteData[] = [
     icon: <LayoutDashboard className="sidebar-btn-icon" />,
     label: "Dashboard",
   },
-  {
-    route: "/notes",
-    icon: <Notebook className="sidebar-btn-icon" />,
-    label: "Notes",
-  },
-  {
-    route: "/chat",
-    icon: <MessageSquare className="sidebar-btn-icon" />,
-    label: "Chat",
-  },
-  {
-    route: "/assignments",
-    icon: <StickyNote className="sidebar-btn-icon" />,
-    label: "Assignments",
-  },
-  {
-    route: "/todo",
-    icon: <ListChecks className="sidebar-btn-icon" />,
-    label: "To Do",
-  },
 ];
 
 export const Sidebar = () => {

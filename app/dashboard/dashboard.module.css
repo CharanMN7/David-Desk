@@ -1,0 +1,44 @@
+.dashboard-heading {
+  font-size: 3rem;
+  margin: 0;
+}
+
+.key-metrics {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.students-heading {
+  margin-top: 2rem;
+  font-size: 2rem;
+}
+
+/* .students-table is a table that looks like macos style spreadsheet where the table is scrollable and the headings are sticky */
+.students-table {
+  width: 100%;
+  overflow: auto;
+  margin-top: 0.5rem;
+}
+
+.students-table th,
+.students-table td {
+  padding: 0.5rem;
+  border: 1px solid #e0e0e0;
+}
+
+.students-table th {
+  position: sticky;
+  top: 0;
+  background-color: #0073e6;
+  color: white;
+  text-align: left;
+}
+
+.students-table tr:nth-child(even) {
+  background-color: #f5f5f5;
+}
+
+.students-table tr:hover {
+  background-color: #eeeeee;
+}
