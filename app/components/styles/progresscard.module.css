@@ -1,7 +1,7 @@
 .progress-card {
   width: auto;
   min-width: 500px;
-  border: 1px dashed #00000044;
+  border: 1px dashed hsla(0, 0%, 0%, 0.267);
   padding: 1rem;
   border-radius: 1rem;
 }

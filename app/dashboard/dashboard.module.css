@@ -52,6 +52,7 @@
 .charts-section {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 2rem;
   margin-top: 2rem;
 }
@@ -71,11 +72,5 @@
 .pie-chart,
 .bar-chart {
   width: 100%; /* Ensure charts take full container width */
-  height: auto; /* Maintain aspect ratio */
+  height: max-content; /* Maintain aspect ratio */
 }
-
-
-
-
-
-
