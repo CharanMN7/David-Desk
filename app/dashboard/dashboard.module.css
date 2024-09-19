@@ -3,6 +3,12 @@
   margin: 0;
 }
 
+.dashheading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .key-metrics {
   display: flex;
   gap: 1rem;
