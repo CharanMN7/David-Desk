@@ -7,15 +7,15 @@ export interface DataType {
 
 export const data_dummy: { [key: string]: DataType[] } = {
   "cse-a": [
-    { name: "Aarushi Mehta", roll_no: "1001", attendance: 72, grade: 78 },
+    { name: "Aarush Mehta", roll_no: "1001", attendance: 72, grade: 78 },
     { name: "Isha Patel", roll_no: "1002", attendance: 82, grade: 88 },
     { name: "Vanya Sharma", roll_no: "1003", attendance: 92, grade: 98 },
     { name: "Advita Bhatt", roll_no: "1004", attendance: 62, grade: 68 },
     { name: "Krishna Gupta", roll_no: "1005", attendance: 52, grade: 58 },
     { name: "Viha Desai", roll_no: "1006", attendance: 42, grade: 48 },
-    { name: "Deepti Mishra", roll_no: "1007", attendance: 32, grade: 38 },
-    { name: "Ayesha Kapoor", roll_no: "1008", attendance: 22, grade: 28 },
-    { name: "Hritika Iyer", roll_no: "1009", attendance: 12, grade: 18 },
+    { name: "Deepak Mishra", roll_no: "1007", attendance: 32, grade: 38 },
+    { name: "Ayush Kapoor", roll_no: "1008", attendance: 22, grade: 28 },
+    { name: "Hritik Iyer", roll_no: "1009", attendance: 12, grade: 18 },
     { name: "Dhriti Reddy", roll_no: "1010", attendance: 92, grade: 98 },
     { name: "Rudra Prasad", roll_no: "1011", attendance: 72, grade: 78 },
     { name: "Arna Menon", roll_no: "1012", attendance: 82, grade: 88 },
