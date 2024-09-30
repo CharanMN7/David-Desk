@@ -14,31 +14,45 @@
   font-size: 2rem;
 }
 
-/* .students-table is a table that looks like macos style spreadsheet where the table is scrollable and the headings are sticky */
-.students-table {
+.recent-items {
+  border: 1px dashed #00000044;
+  height: 20rem;
+  overflow-y: auto;
+}
+
+.item {
   width: 100%;
-  overflow: auto;
-  margin-top: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 2rem;
+  border-bottom: 1px solid #00000010;
 }
 
-.students-table th,
-.students-table td {
-  padding: 0.5rem;
-  border: 1px solid #e0e0e0;
+.item-name {
+  width: 400px;
 }
 
-.students-table th {
-  position: sticky;
-  top: 0;
-  background-color: #0073e6;
-  color: white;
-  text-align: left;
+.item-status {
+  background-color: #00000010;
+  padding: 0.1rem 1rem;
+  border-radius: 1rem;
+  font-size: 12px;
+  border: 1px dashed #00000044;
 }
 
-.students-table tr:nth-child(even) {
-  background-color: #f5f5f5;
+.item-status--done {
+  background-color: #00ff0010;
+  color: green;
+  border-color: green;
 }
 
-.students-table tr:hover {
-  background-color: #eeeeee;
+.item-status--pending {
+  background-color: #ff000010;
+  color: red;
+  border-color: red;
+}
+
+.item:hover {
+  background-color: #00000010;
 }

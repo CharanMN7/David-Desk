@@ -1,138 +1,228 @@
+import { BsThreeDots } from "react-icons/bs";
 import { PageLayout } from "../components/layouts/page-layout/PageLayout";
 import ProgressCard from "../components/ProgressCard";
-import Section from "../components/Section";
 import "./dashboard.module.css";
 
-interface DataType {
-  name: string;
-  roll_no: string;
-  attendance: number;
-  grade: number;
-}
-
-const data: Array<DataType> = [
+const recentItem = [
   {
-    name: "Jack",
-    roll_no: "598",
-    attendance: 72,
-    grade: 78,
+    itemName: "DBMS Assignment 1",
+    status: "Submitted",
+    date: "2024-06-12",
   },
   {
-    name: "Jill",
-    roll_no: "599",
-    attendance: 82,
-    grade: 88,
+    itemName: "DBMS Assignment 2",
+    status: "Pending",
+    date: "2024-07-10",
   },
   {
-    name: "John",
-    roll_no: "600",
-    attendance: 92,
-    grade: 98,
+    itemName: "OS Assignment 2",
+    status: "Submitted",
+    date: "2024-07-15",
   },
   {
-    name: "Jane",
-    roll_no: "601",
-    attendance: 62,
-    grade: 68,
+    itemName: "OS Assignment 1",
+    status: "Submitted",
+    date: "2024-06-20",
   },
   {
-    name: "James",
-    roll_no: "602",
-    attendance: 52,
-    grade: 58,
+    itemName: "OS Assignment 3",
+    status: "Pending",
+    date: "2024-08-20",
   },
   {
-    name: "Jenny",
-    roll_no: "603",
-    attendance: 42,
-    grade: 48,
+    itemName: "DBMS Assignment 3",
+    status: "Pending",
+    date: "2024-08-20",
   },
   {
-    name: "Jasmine",
-    roll_no: "604",
-    attendance: 32,
-    grade: 38,
+    itemName: "OS Assignment 4",
+    status: "Pending",
+    date: "2024-09-25",
   },
   {
-    name: "Jude",
-    roll_no: "605",
-    attendance: 22,
-    grade: 28,
+    itemName: "DBMS Assignment 4",
+    status: "Pending",
+    date: "2024-09-25",
   },
   {
-    name: "Jared",
-    roll_no: "606",
-    attendance: 12,
-    grade: 18,
+    itemName: "OS Assignment 5",
+    status: "Pending",
+    date: "2024-10-25",
   },
   {
-    name: "Jesse",
-    roll_no: "607",
-    attendance: 2,
-    grade: 8,
+    itemName: "DBMS Assignment 5",
+    status: "Pending",
+    date: "2024-10-25",
+  },
+  {
+    itemName: "OS Assignment 6",
+    status: "Pending",
+    date: "2024-11-25",
+  },
+  {
+    itemName: "DBMS Assignment 6",
+    status: "Pending",
+    date: "2024-11-25",
+  },
+  {
+    itemName: "OS Assignment 7",
+    status: "Pending",
+    date: "2024-12-25",
+  },
+  {
+    itemName: "DBMS Assignment 7",
+    status: "Pending",
+    date: "2024-12-25",
+  },
+  {
+    itemName: "OS Assignment 8",
+    status: "Pending",
+    date: "2025-01-25",
+  },
+  {
+    itemName: "DBMS Assignment 8",
+    status: "Pending",
+    date: "2025-01-25",
+  },
+  {
+    itemName: "OS Assignment 9",
+    status: "Pending",
+    date: "2025-02-25",
+  },
+  {
+    itemName: "DBMS Assignment 9",
+    status: "Pending",
+    date: "2025-02-25",
+  },
+  {
+    itemName: "OS Assignment 10",
+    status: "Pending",
+    date: "2025-03-25",
+  },
+  {
+    itemName: "DBMS Assignment 10",
+    status: "Pending",
+    date: "2025-03-25",
   },
 ];
-
-const getAttendanceAveragePercentage = (class_data: Array<DataType>) => {
-  let total = 0;
-  for (let i = 0; i < class_data.length; i++) {
-    total += class_data[i].attendance;
-  }
-  return total / class_data.length;
-};
-
-const getAverageGradePercentage = (class_data: Array<DataType>) => {
-  let total = 0;
-  for (let i = 0; i < class_data.length; i++) {
-    total += class_data[i].grade;
-  }
-  return total / class_data.length;
-};
 
 const Dashboard = () => {
   return (
     <PageLayout heading="Dashboard" disable_heading={true}>
-      <h1 className="dashboard-heading">CSM-A</h1>
+      <h1 className="dashboard-heading">CSE-A</h1>
       <p>
         <b>In-Charge: </b>Dr. Jobs
       </p>
       <div className="key-metrics">
+        <IdCard></IdCard>
         <ProgressCard
           heading="Attendance"
-          value={getAttendanceAveragePercentage(data)}
-          positiveAttribute="Attendance"
+          value={72}
+          positiveAttribute="Present"
           negativeAttribute="Absent"
         />
-        <ProgressCard
-          heading="Average Grade"
-          value={getAverageGradePercentage(data)}
-          positiveAttribute="Pass"
-          negativeAttribute="Fail"
-        />
       </div>
-      {/* Students Table goes here */}
-      <h2 className="students-heading">Students</h2>
-      <table className="students-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Roll No.</th>
-            <th>Attendance</th>
-            <th>Grade</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((student) => (
-            <tr key={student.roll_no}>
-              <td>{student.name}</td>
-              <td>{student.roll_no}</td>
-              <td>{student.attendance}</td>
-              <td>{student.grade}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <h2 className="students-heading">Recents</h2>
+      <div className="recent-items">
+        {recentItem.map((item, index) => (
+          <Item
+            itemName={item.itemName}
+            status={item.status}
+            date={item.date}
+            key={item.date + index}
+          />
+        ))}
+      </div>
     </PageLayout>
   );
 };
 export default Dashboard;
+
+const IdCard = () => {
+  return (
+    <div className="id-card">
+      <h2>Your ID Card</h2>
+      <div className="id-card-content">
+        <img src="https://placehold.co/200x200" alt="" className="id-img" />
+        <div>
+          <h3>Vaishnavi A.</h3>
+          <span>Roll.No: 2201</span>
+          <br />
+          <span>CSE-A</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <span>4th Year</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Item = ({
+  itemName,
+  status,
+  date,
+}: {
+  itemName: string;
+  status: string;
+  date: string;
+}) => {
+  const formatDate = (date: string) => {
+    const d = new Date(date);
+    let month = "";
+    switch (d.getMonth()) {
+      case 0:
+        month = "Jan";
+        break;
+      case 1:
+        month = "Feb";
+        break;
+      case 2:
+        month = "Mar";
+        break;
+      case 3:
+        month = "Apr";
+        break;
+      case 4:
+        month = "May";
+        break;
+      case 5:
+        month = "Jun";
+        break;
+      case 6:
+        month = "Jul";
+        break;
+      case 7:
+        month = "Aug";
+        break;
+      case 8:
+        month = "Sep";
+        break;
+      case 9:
+        month = "Oct";
+        break;
+      case 10:
+        month = "Nov";
+        break;
+      case 11:
+        month = "Dec";
+        break;
+    }
+    return `${d.getDate()} ${month}, ${d.getFullYear()}`;
+  };
+
+  return (
+    <div className="item">
+      <img src="https://via.placeholder.com/64x64" alt="" />
+      <p className="item-name">{itemName}</p>
+      <span
+        className={
+          "item-status" +
+          ` item-status--${status == "Submitted" ? "done" : "pending"}`
+        }
+      >
+        {status}
+      </span>
+      <p className="item-date">{formatDate(date)}</p>
+      <BsThreeDots></BsThreeDots>
+    </div>
+  );
+};

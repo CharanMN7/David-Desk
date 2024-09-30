@@ -8,8 +8,10 @@
 @import url("./components/styles/pagelayout.module.css");
 @import url("./components/styles/section.module.css");
 @import url("./components/styles/progresscard.module.css");
+@import url("./components/styles/idcard.module.css");
 
 @import url("./dashboard/dashboard.module.css");
+@import url("./chat/chat.module.css");
 
 body {
   height: 100%;

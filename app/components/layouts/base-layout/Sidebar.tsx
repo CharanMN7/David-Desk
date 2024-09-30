@@ -3,6 +3,7 @@ import {
   Cog,
   LayoutDashboard,
   ListChecks,
+  MessageCircle,
   MessageSquare,
   Notebook,
   StickyNote,
@@ -21,6 +22,11 @@ const pages: PageRouteData[] = [
     route: "/dashboard",
     icon: <LayoutDashboard className="sidebar-btn-icon" />,
     label: "Dashboard",
+  },
+  {
+    route: "/chat",
+    icon: <MessageSquare className="sidebar-btn-icon" />,
+    label: "Chat",
   },
 ];
 
