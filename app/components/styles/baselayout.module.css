@@ -1,9 +1,0 @@
-.main-app {
-  flex: 1;
-  overflow-y: scroll;
-
-  > main {
-    padding: 1rem;
-    margin: 3.75rem 0 0 200px;
-  }
-}
