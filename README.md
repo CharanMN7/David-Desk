@@ -25,18 +25,18 @@ Here's how to use it:
 
 1. Install the dependencies
 ```bash
-npm install
+pnpm install
 ```
 
 2. Run the dev server:
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 As mentioned above, prettier is also included. Once you're done writing your code, you can run the following command to format it with prettier:
 
 ```bash
-npm run format
+pnpm run format
 ```
 
 ---
@@ -60,7 +60,7 @@ Prettier helps keep the code formatting in sync across everyone's copies of the 
 ```
 4. Run the following command:
 ```bash
-npm install
+pnpm install
 ```
 
 ---
