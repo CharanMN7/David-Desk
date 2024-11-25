@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "../globals.css";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
+import AdminPanelLayout from "@/components/admin-panel/admin-panel-layout";
 
 export const metadata: Metadata = {
   // Change this to your liking:
@@ -21,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
+          <AdminPanelLayout>{children}</AdminPanelLayout>
         </ThemeProvider>
       </body>
     </html>
