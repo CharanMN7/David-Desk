@@ -1,6 +1,12 @@
 "use client";
 
+import { SmapleChart } from "./SampleChart";
+
 const Dashbaord = () => {
-  return <div>Dashbaord</div>;
+  return (
+    <>
+      <SmapleChart />
+    </>
+  );
 };
 export default Dashbaord;
