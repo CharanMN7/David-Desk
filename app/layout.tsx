@@ -5,9 +5,9 @@ import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
   // Change this to your liking:
-  title: "Charan's Next 14 Template",
+  title: "David Desk",
   description:
-    "This is a Next 14 template created by Charan (https://charan.dev/)",
+    "David Desk is the ultimate institute management system for smart institutions",
 };
 
 const inter = Inter({ subsets: ["latin"] });
