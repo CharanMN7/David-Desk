@@ -3,10 +3,6 @@
 import { SmapleChart } from "./SampleChart";
 
 const Dashbaord = () => {
-  return (
-    <>
-      <SmapleChart />
-    </>
-  );
+  return <SmapleChart />;
 };
 export default Dashbaord;

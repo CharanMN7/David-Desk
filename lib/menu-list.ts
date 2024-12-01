@@ -8,12 +8,14 @@ import {
   LayoutGrid,
   LucideIcon,
   BarChartBig,
+  Group,
 } from "lucide-react";
 
 type Submenu = {
   href: string;
   label: string;
   active?: boolean;
+  icon: LucideIcon;
 };
 
 type Menu = {
@@ -41,10 +43,16 @@ export function getMenuList(pathname: string): Group[] {
           submenus: [],
         },
         {
-          href: "/attendance",
-          label: "Attendance",
+          href: "#",
+          label: "Metrics",
           icon: BarChartBig,
-          submenus: [],
+          submenus: [
+            {
+              href: "/attendance",
+              label: "Attendance",
+              icon: Group,
+            },
+          ],
         },
       ],
     },
