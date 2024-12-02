@@ -1,0 +1,41 @@
+/* Ensure the overall container is properly spaced */
+.attendanceContainer {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  /* Make sure the branch links are displayed at the top */
+  .branchLinksContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px; /* Add space below the branch links */
+  }
+  
+  /* Style the individual branch link buttons */
+  .branchLink {
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .branchLink:hover {
+    background-color: #45a049;
+  }
+  
+  /* Add space and size for the chart containers */
+  .chartContainer {
+    width: 100%;
+    height: 300px; /* Ensure the chart has a defined height */
+    margin-top: 20px; /* Add space between branch links and charts */
+    display: flex;
+    justify-content: center;
+  }
+  
