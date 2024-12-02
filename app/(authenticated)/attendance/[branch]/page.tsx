@@ -1,45 +1,105 @@
 'use client';
-
-import { useEffect, useState } from "react";
-import { useSearchParams } from 'next/navigation';  // Correct import from next/navigation
-import { ContentLayout } from "@/components/admin-panel/content-layout";
-import { AttendanceBarChart } from "../AttendanceBarChart";
-import styles from "../attendance.module.css"; // Adjust path if needed
+import React from "react";
+import { AttendanceOverview } from "./AttendanceOverview";
+import AttendanceTable from "./AttendanceTable";
+import {SectionWiseMetrics} from "./SectionWiseMetrics";
+import {SectionAttendanceChart} from "./SectionAttendanceChart";
 
 const BranchAttendancePage = () => {
-  const [branch, setBranch] = useState<string | null>(null); // Branch name state
-  const [isClient, setIsClient] = useState(false); // Track if the component is rendered client-side
-  const searchParams = useSearchParams(); // Access the query parameters
+  const overviewData = {
+    totalAttendancePercentage: 85,
+    averageAttendancePerSection: 80,
+    totalStudents: 200,
+    totalClassesHeld: 50,
+    totalAbsentStudents: 20,
+  };
 
-  // Set the client-side flag after the component mounts
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  const sectionsData = [
+    {
+      name: "A",
+      attendancePercentage: 90,
+      studentsPresent: 35,
+      studentsAbsent: 5,
+      averageAttendancePerClass: 85,
+    },
+    {
+      name: "B",
+      attendancePercentage: 85,
+      studentsPresent: 30,
+      studentsAbsent: 10,
+      averageAttendancePerClass: 80,
+    },
+    {
+      name: "C",
+      attendancePercentage: 88,
+      studentsPresent: 33,
+      studentsAbsent: 7,
+      averageAttendancePerClass: 82,
+    },
+    {
+      name: "D",
+      attendancePercentage: 82,
+      studentsPresent: 28,
+      studentsAbsent: 12,
+      averageAttendancePerClass: 75,
+    },
+    {
+      name: "E",
+      attendancePercentage: 87,
+      studentsPresent: 32,
+      studentsAbsent: 8,
+      averageAttendancePerClass: 78,
+    },
+    {
+      name: "F",
+      attendancePercentage: 84,
+      studentsPresent: 31,
+      studentsAbsent: 9,
+      averageAttendancePerClass: 76,
+    },
+  ];
 
-  // Once the component has mounted, get the branch name from the URL
-  useEffect(() => {
-    if (isClient && searchParams) {
-      const branchName = searchParams.get('branch'); // Get branch name from query
-      if (branchName) {
-        setBranch(branchName); // Set the branch name
-      }
-    }
-  }, [isClient, searchParams]);
-
-  // If it's still rendering or branch data isn't available, show loading state
-  if (!isClient || !branch) {
-    return <div>Loading...</div>;
-  }
+  const studentsDataBySection = {
+    A: [
+      { name: "Student 1", rollNumber: "A123", totalClassesAttended: 20, totalClassesAbsent: 5, attendancePercentage: 80 },
+      { name: "Student 2", rollNumber: "A124", totalClassesAttended: 18, totalClassesAbsent: 7, attendancePercentage: 72 },
+    ],
+    B: [
+      { name: "Student 3", rollNumber: "B123", totalClassesAttended: 22, totalClassesAbsent: 3, attendancePercentage: 88 },
+      { name: "Student 4", rollNumber: "B124", totalClassesAttended: 19, totalClassesAbsent: 6, attendancePercentage: 76 },
+    ],
+    C: [
+      { name: "Student 5", rollNumber: "C123", totalClassesAttended: 21, totalClassesAbsent: 4, attendancePercentage: 84 },
+      { name: "Student 6", rollNumber: "C124", totalClassesAttended: 20, totalClassesAbsent: 5, attendancePercentage: 80 },
+    ],
+    D: [
+      { name: "Student 7", rollNumber: "D123", totalClassesAttended: 23, totalClassesAbsent: 2, attendancePercentage: 92 },
+      { name: "Student 8", rollNumber: "D124", totalClassesAttended: 17, totalClassesAbsent: 8, attendancePercentage: 68 },
+    ],
+    E: [
+      { name: "Student 9", rollNumber: "E123", totalClassesAttended: 25, totalClassesAbsent: 0, attendancePercentage: 100 },
+      { name: "Student 10", rollNumber: "E124", totalClassesAttended: 19, totalClassesAbsent: 6, attendancePercentage: 76 },
+    ],
+    F: [
+      { name: "Student 11", rollNumber: "F123", totalClassesAttended: 24, totalClassesAbsent: 1, attendancePercentage: 96 },
+      { name: "Student 12", rollNumber: "F124", totalClassesAttended: 18, totalClassesAbsent: 7, attendancePercentage: 72 },
+    ],
+  };
 
   return (
-    <ContentLayout title={`${branch.toUpperCase()} Attendance`}>
-      <h1>Attendance for {branch.toUpperCase()}</h1>
-      <div className={styles.chartContainer}>
-        {/* Replace this with actual data for the branch */}
-        <AttendanceBarChart />
-      </div>
-    </ContentLayout>
+    <div>
+      <AttendanceOverview data={overviewData} />
+      <SectionWiseMetrics sections={sectionsData} />
+      <SectionAttendanceChart sections={sectionsData} />
+      
+      {Object.entries(studentsDataBySection).map(([section, students]) => (
+        <div key={section}>
+          <h2>Section {section} - Detailed Attendance Table</h2>
+          <AttendanceTable students={students} />
+        </div>
+      ))}
+    </div>
   );
 };
 
-export default BranchAttendancePage;
+export default BranchAttendancePage; // Corrected export

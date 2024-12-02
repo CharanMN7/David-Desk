@@ -1,17 +1,16 @@
-"use client";
+import React, { useState } from "react"; // Ensure useState is imported
 
-import React, { useState } from "react";
 import {
   Bar,
   BarChart,
   CartesianGrid,
   LabelList,
   XAxis,
-  Line,
-  LineChart,
-  YAxis,
   Tooltip,
   Legend,
+  LineChart,   // Import LineChart here
+  Line,        // Import Line here
+  YAxis,       // Import YAxis here
 } from "recharts";
 
 import {
@@ -22,13 +21,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-import { OptionDropdown } from "./OptionDropdown";
 import { Label } from "@/components/ui/label";
+import { OptionDropdown } from "./OptionDropdown";
 
 // Dropdown Data
 const academicYearData = [
@@ -56,7 +50,7 @@ const chartData = [
   { branch: "CSO", attendance_percentage: 91 },
   { branch: "ECE", attendance_percentage: 89 },
   { branch: "EEE", attendance_percentage: 93 },
-  { branch: "MEC", attendance_percentage: 65 }, // Added MEC
+  { branch: "MEC", attendance_percentage: 65 },
   { branch: "CIVIL", attendance_percentage: 91 },
 ];
 
@@ -111,35 +105,6 @@ export function AttendanceBarChart() {
               <LabelList position="top" fontSize={12} />
             </Bar>
           </BarChart>
-        </CardContent>
-        <CardFooter />
-      </Card>
-
-      {/* Line Chart */}
-      <Card className="max-w-lg">
-        <CardHeader className="space-y-4">
-          <CardTitle>Branch-wise Attendance Trends</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <LineChart
-            width={400}
-            height={300}
-            data={chartData}
-            margin={{ top: 20 }}
-          >
-            <CartesianGrid vertical={false} />
-            <XAxis dataKey="branch" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line
-              type="monotone"
-              dataKey="attendance_percentage"
-              stroke="#8884d8"
-              strokeWidth={2}
-              activeDot={{ r: 8 }}
-            />
-          </LineChart>
         </CardContent>
         <CardFooter />
       </Card>

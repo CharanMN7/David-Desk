@@ -44,7 +44,7 @@ export function getMenuList(pathname: string): Group[] {
         },
         {
           href: "#",
-          label: "Metrics",
+          label: "Student Metrics",
           icon: BarChartBig,
           submenus: [
             {

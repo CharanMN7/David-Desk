@@ -1,23 +1,48 @@
-import React from 'react';
+import React from "react";
 
 interface SectionWiseMetricsProps {
-  branch: string;
+  sections: {
+    name: string;
+    attendancePercentage: number;
+    studentsPresent: number;
+    studentsAbsent: number;
+    averageAttendancePerClass: number;
+  }[];
 }
 
-export const SectionWiseMetrics: React.FC<SectionWiseMetricsProps> = ({ branch }) => {
-  // You can fetch this data dynamically from an API or use mock data
-  const sections = ['A', 'B', 'C', 'D', 'E', 'F'];
-
+export const SectionWiseMetrics = ({ sections }: SectionWiseMetricsProps) => {
   return (
     <div>
       <h2>Section-wise Metrics</h2>
-      {sections.map((section) => (
-        <div key={section}>
-          <h3>Section {section}</h3>
-          <p>Attendance Percentage: 90%</p>
-          <p>Number of Students Present: 35</p>
-          <p>Number of Students Absent: 5</p>
-          <p>Average Attendance per Class: 85%</p>
+      {sections.map((section, index) => (
+        <div key={index} style={{ marginBottom: "20px" }}>
+          <h3>Section {section.name}</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Attendance Percentage</td>
+                <td>{section.attendancePercentage}%</td>
+              </tr>
+              <tr>
+                <td>Number of Students Present</td>
+                <td>{section.studentsPresent}</td>
+              </tr>
+              <tr>
+                <td>Number of Students Absent</td>
+                <td>{section.studentsAbsent}</td>
+              </tr>
+              <tr>
+                <td>Average Attendance per Class</td>
+                <td>{section.averageAttendancePerClass}%</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       ))}
     </div>
