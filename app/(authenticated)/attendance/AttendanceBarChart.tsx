@@ -1,4 +1,4 @@
-import React, { useState } from "react"; // Ensure useState is imported
+import React, { useEffect, useState } from "react"; // Ensure useState is imported
 
 import {
   Bar,
@@ -8,9 +8,9 @@ import {
   XAxis,
   Tooltip,
   Legend,
-  LineChart,   // Import LineChart here
-  Line,        // Import Line here
-  YAxis,       // Import YAxis here
+  LineChart, // Import LineChart here
+  Line, // Import Line here
+  YAxis, // Import YAxis here
 } from "recharts";
 
 import {
@@ -62,7 +62,24 @@ const thresholdData = chartData.map((item) => ({
 
 export function AttendanceBarChart() {
   const [selectedYear, setSelectedYear] = useState(academicYearData[0].value);
-  const [selectedStudyYear, setSelectedStudyYear] = useState(yearOfStudyData[0].value);
+  const [selectedStudyYear, setSelectedStudyYear] = useState(
+    yearOfStudyData[0].value,
+  );
+  const [chartData, setChartData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(
+        // "https://david-backend-production.up.railway.app/attendance/branch-summary/",
+        "/api/attendance/summary/branch/",
+      );
+      const data = await response.json();
+      setChartData(data.data);
+      console.log(data.data);
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="grid gap-6 md:grid-cols-2">
