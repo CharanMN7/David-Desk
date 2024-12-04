@@ -52,12 +52,12 @@ export function getMenuList(pathname: string, userRole: string): Group[] {
           icon: BarChartBig,
           submenus: [
             {
-              href: "/admin/students",
+              href: "/admin/metrics/students",
               label: "Students",
               icon: Group,
             },
             {
-              href: "/admin/teachers",
+              href: "/admin/metrics/teachers",
               label: "Teachers",
               icon: Group,
             },
@@ -74,7 +74,7 @@ export function getMenuList(pathname: string, userRole: string): Group[] {
               icon: MessageCircleQuestion,
             },
             {
-              href: "/admin//time-tables",
+              href: "/admin/information/time-tables",
               label: "Time Tables",
               icon: Calendar,
             },
