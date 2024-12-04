@@ -9,6 +9,10 @@ import {
   LucideIcon,
   BarChartBig,
   Group,
+  Calendar,
+  MessageCircleQuestion,
+  Info,
+  Box,
 } from "lucide-react";
 
 type Submenu = {
@@ -31,8 +35,62 @@ type Group = {
   menus: Menu[];
 };
 
-export function getMenuList(pathname: string): Group[] {
-  return [
+export function getMenuList(pathname: string, userRole: string): Group[] {
+  const adminMenuList = [
+    {
+      groupLabel: "",
+      menus: [
+        {
+          href: "/admin/dashboard",
+          label: "Dashboard",
+          icon: LayoutGrid,
+          submenus: [],
+        },
+        {
+          href: "#",
+          label: "Metrics",
+          icon: BarChartBig,
+          submenus: [
+            {
+              href: "/admin/students",
+              label: "Students",
+              icon: Group,
+            },
+            {
+              href: "/admin/teachers",
+              label: "Teachers",
+              icon: Group,
+            },
+          ],
+        },
+        {
+          href: "#",
+          label: "Information",
+          icon: Info,
+          submenus: [
+            {
+              href: "/admin/information/announcements",
+              label: "Announcements",
+              icon: MessageCircleQuestion,
+            },
+            {
+              href: "/admin//time-tables",
+              label: "Time Tables",
+              icon: Calendar,
+            },
+          ],
+        },
+        {
+          href: "/admin/inventory",
+          label: "Inventory",
+          icon: Box,
+          submenus: [],
+        },
+      ],
+    },
+  ];
+
+  const teacherMenuList = [
     {
       groupLabel: "",
       menus: [
@@ -42,64 +100,30 @@ export function getMenuList(pathname: string): Group[] {
           icon: LayoutGrid,
           submenus: [],
         },
+      ],
+    },
+  ];
+
+  const studentMenuList = [
+    {
+      groupLabel: "",
+      menus: [
         {
-          href: "#",
-          label: "Student Metrics",
-          icon: BarChartBig,
-          submenus: [
-            {
-              href: "/attendance",
-              label: "Attendance",
-              icon: Group,
-            },
-          ],
+          href: "/dashboard",
+          label: "Dashboard",
+          icon: LayoutGrid,
+          submenus: [],
         },
       ],
     },
-    // {
-    //   groupLabel: "Contents",
-    //   menus: [
-    //     {
-    //       href: "",
-    //       label: "Posts",
-    //       icon: SquarePen,
-    //       submenus: [
-    //         {
-    //           href: "/posts",
-    //           label: "All Posts"
-    //         },
-    //         {
-    //           href: "/posts/new",
-    //           label: "New Post"
-    //         }
-    //       ]
-    //     },
-    //     {
-    //       href: "/categories",
-    //       label: "Categories",
-    //       icon: Bookmark
-    //     },
-    //     {
-    //       href: "/tags",
-    //       label: "Tags",
-    //       icon: Tag
-    //     }
-    //   ]
-    // },
-    // {
-    //   groupLabel: "Settings",
-    //   menus: [
-    //     {
-    //       href: "/users",
-    //       label: "Users",
-    //       icon: Users
-    //     },
-    //     {
-    //       href: "/account",
-    //       label: "Account",
-    //       icon: Settings
-    //     }
-    //   ]
-    // }
   ];
+
+  if (userRole === "admin") {
+    return adminMenuList;
+  } else if (userRole === "teacher") {
+    return teacherMenuList;
+  } else if (userRole === "student") {
+    return studentMenuList;
+  }
+  return [];
 }
