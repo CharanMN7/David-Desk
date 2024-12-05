@@ -17,18 +17,19 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+
 const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
+  { branch: "CSE", average_grade: 82 },
+  { branch: "ECE", average_grade: 75 },
+  { branch: "EEE", average_grade: 73 },
+  { branch: "MECH", average_grade: 68 },
+  { branch: "CIVIL", average_grade: 80 },
+  { branch: "IT", average_grade: 88 },
 ];
 
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
+  average_grade: {
+    label: "Average Grade",
     color: "hsl(var(--chart-1))",
   },
 } satisfies ChartConfig;
@@ -37,34 +38,40 @@ export function BranchwiseGrades({ ...props }) {
   return (
     <Card {...props}>
       <CardHeader>
-        <CardTitle>Bar Chart</CardTitle>
+        <CardTitle>Branch-wise Average Grades</CardTitle>
         <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={chartData}>
-            <CartesianGrid vertical={false} />
+          <BarChart
+            accessibilityLayer
+            data={chartData}
+            margin={{ left: 16, right: 16, top: 20, bottom: 20 }}
+            width={600}
+            height={300}
+          >
+            <CartesianGrid vertical={false} strokeDasharray="3 3" />
             <XAxis
-              dataKey="month"
+              dataKey="branch"
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
             />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
+            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+            <Bar
+              dataKey="average_grade"
+              fill="var(--color-average_grade)"
+              radius={[8, 8, 0, 0]}
             />
-            <Bar dataKey="desktop" fill="var(--color-desktop)" radius={8} />
           </BarChart>
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+          Branch-wise Grades <TrendingUp className="h-4 w-4" />
         </div>
         <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
+          Average grades for each branch in the first half of 2024.
         </div>
       </CardFooter>
     </Card>

@@ -17,23 +17,38 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+
 const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
+  { year: "2021", CSE: 95, ECE: 65, EEE: 70, MECH: 50, CIVIL: 85, IT: 40 },
+  { year: "2022", CSE: 80, ECE: 55, EEE: 60, MECH: 70, CIVIL: 90, IT: 45 },
+  { year: "2023", CSE: 60, ECE: 75, EEE: 80, MECH: 60, CIVIL: 70, IT: 50 },
+  { year: "2024", CSE: 85, ECE: 90, EEE: 75, MECH: 55, CIVIL: 60, IT: 65 },
 ];
 
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
+  CSE: {
+    label: "CSE",
     color: "hsl(var(--chart-1))",
   },
-  mobile: {
-    label: "Mobile",
+  ECE: {
+    label: "ECE",
     color: "hsl(var(--chart-2))",
+  },
+  EEE: {
+    label: "EEE",
+    color: "hsl(var(--chart-3))",
+  },
+  MECH: {
+    label: "MECH",
+    color: "hsl(var(--chart-4))",
+  },
+  CIVIL: {
+    label: "CIVIL",
+    color: "hsl(var(--chart-5))",
+  },
+  IT: {
+    label: "IT",
+    color: "hsl(var(--chart-6))",
   },
 } satisfies ChartConfig;
 
@@ -41,8 +56,8 @@ export function YoyBranchwiseAttendance({ ...props }) {
   return (
     <Card {...props}>
       <CardHeader>
-        <CardTitle>Line Chart - Multiple</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardTitle>Branch-wise Attendance Chart</CardTitle>
+        <CardDescription>Year-over-Year Comparison (2021-2024)</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
@@ -52,28 +67,59 @@ export function YoyBranchwiseAttendance({ ...props }) {
             margin={{
               left: 12,
               right: 12,
+              top: 20,
+              bottom: 20,
             }}
+            width={700} // Increased width for better display
           >
-            <CartesianGrid vertical={false} />
+            <CartesianGrid vertical={false} strokeDasharray="3 3" />
             <XAxis
-              dataKey="month"
+              dataKey="year"
               tickLine={false}
               axisLine={false}
-              tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3)}
+              tickMargin={10}
+              interval={0} // Ensure all years are displayed
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <Line
-              dataKey="desktop"
+              dataKey="CSE"
               type="monotone"
-              stroke="var(--color-desktop)"
+              stroke="var(--color-CSE)"
               strokeWidth={2}
               dot={false}
             />
             <Line
-              dataKey="mobile"
+              dataKey="ECE"
               type="monotone"
-              stroke="var(--color-mobile)"
+              stroke="var(--color-ECE)"
+              strokeWidth={2}
+              dot={false}
+            />
+            <Line
+              dataKey="EEE"
+              type="monotone"
+              stroke="var(--color-EEE)"
+              strokeWidth={2}
+              dot={false}
+            />
+            <Line
+              dataKey="MECH"
+              type="monotone"
+              stroke="var(--color-MECH)"
+              strokeWidth={2}
+              dot={false}
+            />
+            <Line
+              dataKey="CIVIL"
+              type="monotone"
+              stroke="var(--color-CIVIL)"
+              strokeWidth={2}
+              dot={false}
+            />
+            <Line
+              dataKey="IT"
+              type="monotone"
+              stroke="var(--color-IT)"
               strokeWidth={2}
               dot={false}
             />
@@ -84,10 +130,8 @@ export function YoyBranchwiseAttendance({ ...props }) {
         <div className="flex w-full items-start gap-2 text-sm">
           <div className="grid gap-2">
             <div className="flex items-center gap-2 font-medium leading-none">
-              Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-            </div>
-            <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              Showing total visitors for the last 6 months
+              Year-over-Year Branch-wise Attendance{" "}
+              <TrendingUp className="h-4 w-4" />
             </div>
           </div>
         </div>

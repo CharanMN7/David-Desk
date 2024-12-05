@@ -19,17 +19,17 @@ import {
 } from "@/components/ui/chart";
 
 const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
+  { branch: "CSE", attendance_percentage: 90 },
+  { branch: "ECE", attendance_percentage: 85 },
+  { branch: "EEE", attendance_percentage: 70 },
+  { branch: "MECH", attendance_percentage: 65 },
+  { branch: "CIVIL", attendance_percentage: 91 },
+  { branch: "IT", attendance_percentage: 89 },
 ];
 
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
+  attendance_percentage: {
+    label: "attendance_percentage",
     color: "hsl(var(--chart-1))",
   },
 } satisfies ChartConfig;
@@ -39,14 +39,14 @@ export function BranchwiseAttendance({ ...props }) {
     <Card {...props}>
       <CardHeader>
         <CardTitle>Bar Chart</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardDescription></CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="month"
+              dataKey="branch"
               tickLine={false}
               tickMargin={10}
               axisLine={false}
@@ -56,17 +56,19 @@ export function BranchwiseAttendance({ ...props }) {
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-            <Bar dataKey="desktop" fill="var(--color-desktop)" radius={8} />
+            <Bar
+              dataKey="attendance_percentage"
+              fill="var(--color-attendance_percentage)"
+              radius={8}
+            />
           </BarChart>
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+          Branch-wise attendance <TrendingUp className="h-4 w-4" />
         </div>
-        <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
-        </div>
+        <div className="leading-none text-muted-foreground"></div>
       </CardFooter>
     </Card>
   );
