@@ -1,7 +1,7 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
+import { TrendingUp, TrendingDown } from "lucide-react";
+import { CartesianGrid, Line, LineChart, XAxis, YAxis, Tooltip } from "recharts";
 
 import {
   Card,
@@ -17,32 +17,53 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+
 const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
+  { year: "2021", cse: 65, ece: 58, eee: 70, mech: 62, civil: 60, it: 55 },
+  { year: "2022", cse: 70, ece: 65, eee: 72, mech: 66, civil: 68, it: 60 },
+  { year: "2023", cse: 80, ece: 72, eee: 75, mech: 69, civil: 72, it: 68 },
+  { year: "2024", cse: 85, ece: 78, eee: 78, mech: 71, civil: 75, it: 85 },
 ];
 
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "hsl(var(--chart-1))",
+  cse: {
+    label: "CSE",
+    color: "#34D399",
   },
-  mobile: {
-    label: "Mobile",
-    color: "hsl(var(--chart-2))",
+  ece: {
+    label: "ECE",
+    color: "#3B82F6",
+  },
+  eee: {
+    label: "EEE",
+    color: "#FBBF24",
+  },
+  mech: {
+    label: "MECH",
+    color: "#EF4444",
+  },
+  civil: {
+    label: "CIVIL",
+    color: "#6366F1",
+  },
+  it: {
+    label: "IT",
+    color: "#10B981",
   },
 } satisfies ChartConfig;
 
 export function YoyBranchwiseGrades({ ...props }) {
+  const calculateTrend = (current: number, previous: number) => {
+    if (current > previous) return "up";
+    if (current < previous) return "down";
+    return "stable";
+  };
+
   return (
     <Card {...props}>
       <CardHeader>
-        <CardTitle>Line Chart - Multiple</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardTitle>Department-Wise Grade Distribution</CardTitle>
+        <CardDescription>2021 - 2024</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
@@ -50,33 +71,42 @@ export function YoyBranchwiseGrades({ ...props }) {
             accessibilityLayer
             data={chartData}
             margin={{
-              left: 12,
+              top: 20,
               right: 12,
+              left: 12,
+              bottom: 8,
             }}
           >
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="month"
+              dataKey="year"
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3)}
+              tickFormatter={(value) => value}
             />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-            <Line
-              dataKey="desktop"
-              type="monotone"
-              stroke="var(--color-desktop)"
-              strokeWidth={2}
-              dot={false}
-            />
-            <Line
-              dataKey="mobile"
-              type="monotone"
-              stroke="var(--color-mobile)"
-              strokeWidth={2}
-              dot={false}
-            />
+            <YAxis />
+            <Tooltip content={<ChartTooltipContent />} />
+            {Object.keys(chartConfig).map((key) => {
+              const department = chartConfig[key as keyof typeof chartConfig];
+              const trend = calculateTrend(
+                chartData[3][key],
+                chartData[2][key]
+              );
+
+              return (
+                <Line
+                  key={key}
+                  dataKey={key}
+                  type="monotone"
+                  stroke={department.color}
+                  strokeWidth={2}
+                  dot={false}
+                  activeDot={false}
+                  isAnimationActive={false}
+                />
+              );
+            })}
           </LineChart>
         </ChartContainer>
       </CardContent>
@@ -84,10 +114,10 @@ export function YoyBranchwiseGrades({ ...props }) {
         <div className="flex w-full items-start gap-2 text-sm">
           <div className="grid gap-2">
             <div className="flex items-center gap-2 font-medium leading-none">
-              Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+              Year-over-year branch-wise grades <TrendingUp className="h-4 w-4" />
             </div>
             <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              Showing total visitors for the last 6 months
+              Showing department-wise grade distribution for the years 2021-2024
             </div>
           </div>
         </div>
