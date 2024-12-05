@@ -21,7 +21,7 @@ const Page = () => {
           <div className="flex justify-between border p-4 my-4 rounded-xl">
             <h2 className="text-2xl font-semibold">Grades</h2>
             <Button asChild>
-              <Link href="/admin/metrics/students/grades">
+              <Link href="/admin/metrics/students/grade-stats">
                 More Actions <ChevronRight />
               </Link>
             </Button>
@@ -37,7 +37,7 @@ const Page = () => {
           <div className="flex justify-between border p-4 my-4 rounded-xl">
             <h2 className="text-2xl font-semibold">Attendance</h2>
             <Button asChild>
-              <Link href="/admin/metrics/students/attendance">
+              <Link href="/admin/metrics/students/attendance-stats">
                 More Actions <ChevronRight />
               </Link>
             </Button>
