@@ -1,8 +1,14 @@
-"use client";
-import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
-export default function Home() {
-  const router = useRouter();
-  router.push("/dashboard");
-  return <></>;
-}
+const Page = () => {
+  return (
+    <div>
+      <p>This part is for testing purposes only</p>
+      <Button asChild>
+        <Link href="/admin/dashboard">Admin Dashbaord</Link>
+      </Button>
+    </div>
+  );
+};
+export default Page;
