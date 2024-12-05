@@ -17,6 +17,7 @@ const Page = () => {
       <p className="text-sm text-muted-foreground my-2">
         Create cutom visualizationa and reports for your data.
       </p>
+      <div>{/* Content goes here */}</div>
     </ContentLayout>
   );
 };
