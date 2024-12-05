@@ -56,7 +56,11 @@ export function BranchwiseAttendance({ ...props }) {
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-            <Bar dataKey="attendance_percentage" fill="var(--color-attendance_percentage)" radius={8} />
+            <Bar
+              dataKey="attendance_percentage"
+              fill="var(--color-attendance_percentage)"
+              radius={8}
+            />
           </BarChart>
         </ChartContainer>
       </CardContent>
@@ -64,9 +68,7 @@ export function BranchwiseAttendance({ ...props }) {
         <div className="flex gap-2 font-medium leading-none">
           Branch-wise attendance <TrendingUp className="h-4 w-4" />
         </div>
-        <div className="leading-none text-muted-foreground">
-  
-        </div>
+        <div className="leading-none text-muted-foreground"></div>
       </CardFooter>
     </Card>
   );

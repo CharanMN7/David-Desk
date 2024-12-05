@@ -57,10 +57,7 @@ export function BranchwiseGrades({ ...props }) {
               tickMargin={10}
               axisLine={false}
             />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent />}
-            />
+            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <Bar
               dataKey="average_grade"
               fill="var(--color-average_grade)"

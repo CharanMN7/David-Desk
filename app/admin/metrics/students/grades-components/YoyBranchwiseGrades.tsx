@@ -1,7 +1,14 @@
 "use client";
 
 import { TrendingUp, TrendingDown } from "lucide-react";
-import { CartesianGrid, Line, LineChart, XAxis, YAxis, Tooltip } from "recharts";
+import {
+  CartesianGrid,
+  Line,
+  LineChart,
+  XAxis,
+  YAxis,
+  Tooltip,
+} from "recharts";
 
 import {
   Card,
@@ -91,7 +98,7 @@ export function YoyBranchwiseGrades({ ...props }) {
               const department = chartConfig[key as keyof typeof chartConfig];
               const trend = calculateTrend(
                 chartData[3][key],
-                chartData[2][key]
+                chartData[2][key],
               );
 
               return (
@@ -114,7 +121,8 @@ export function YoyBranchwiseGrades({ ...props }) {
         <div className="flex w-full items-start gap-2 text-sm">
           <div className="grid gap-2">
             <div className="flex items-center gap-2 font-medium leading-none">
-              Year-over-year branch-wise grades <TrendingUp className="h-4 w-4" />
+              Year-over-year branch-wise grades{" "}
+              <TrendingUp className="h-4 w-4" />
             </div>
             <div className="flex items-center gap-2 leading-none text-muted-foreground">
               Showing department-wise grade distribution for the years 2021-2024

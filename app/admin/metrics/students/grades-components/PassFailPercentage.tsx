@@ -20,8 +20,8 @@ import {
 } from "@/components/ui/chart";
 
 const chartData = [
-  { status: "Pass", percentage: 72, fill: "#28a745" }, 
-  { status: "Fail", percentage: 28, fill: "#dc3545" }, 
+  { status: "Pass", percentage: 72, fill: "#28a745" },
+  { status: "Fail", percentage: 28, fill: "#dc3545" },
 ];
 
 const chartConfig = {
@@ -75,14 +75,14 @@ export function PassFailPercentage({ ...props }) {
                       >
                         <tspan
                           x={viewBox.cx}
-                          y={viewBox.cy - 10} 
+                          y={viewBox.cy - 10}
                           className="fill-foreground text-xl font-bold"
                         >
                           {passData?.percentage}% Pass
                         </tspan>
                         <tspan
                           x={viewBox.cx}
-                          y={(viewBox.cy || 0) + 20} 
+                          y={(viewBox.cy || 0) + 20}
                           className="fill-muted-foreground text-base"
                         >
                           {failData?.percentage}% Fail
