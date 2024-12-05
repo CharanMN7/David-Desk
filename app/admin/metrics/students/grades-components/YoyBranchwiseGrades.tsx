@@ -1,6 +1,6 @@
 "use client";
 
-import { TrendingUp, TrendingDown } from "lucide-react";
+import { TrendingUp } from "lucide-react";
 import {
   CartesianGrid,
   Line,
@@ -21,7 +21,7 @@ import {
 import {
   ChartConfig,
   ChartContainer,
-  ChartTooltip,
+  // ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
@@ -60,11 +60,11 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function YoyBranchwiseGrades({ ...props }) {
-  const calculateTrend = (current: number, previous: number) => {
-    if (current > previous) return "up";
-    if (current < previous) return "down";
-    return "stable";
-  };
+  // const calculateTrend = (current: number, previous: number) => {
+  //   if (current > previous) return "up";
+  //   if (current < previous) return "down";
+  //   return "stable";
+  // };
 
   return (
     <Card {...props}>
@@ -96,10 +96,10 @@ export function YoyBranchwiseGrades({ ...props }) {
             <Tooltip content={<ChartTooltipContent />} />
             {Object.keys(chartConfig).map((key) => {
               const department = chartConfig[key as keyof typeof chartConfig];
-              const trend = calculateTrend(
-                chartData[3][key],
-                chartData[2][key],
-              );
+              // const trend = calculateTrend(
+              //   chartData[3][key],
+              //   chartData[2][key],
+              // );
 
               return (
                 <Line

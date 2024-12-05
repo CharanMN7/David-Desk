@@ -75,7 +75,7 @@ export function PassFailPercentage({ ...props }) {
                       >
                         <tspan
                           x={viewBox.cx}
-                          y={viewBox.cy - 10}
+                          // y={viewBox.cy - 10}
                           className="fill-foreground text-xl font-bold"
                         >
                           {passData?.percentage}% Pass
