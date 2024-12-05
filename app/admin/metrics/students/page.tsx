@@ -6,6 +6,8 @@ import { BranchwiseGrades } from "./grades-components/BranchwiseGrades";
 import { YoyBranchwiseGrades } from "./grades-components/YoyBranchwiseGrades";
 import { PassFailPercentage } from "./grades-components/PassFailPercentage";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { BranchwiseAttendance } from "./attendance-components/BranchwiseAttendance";
+import { YoyBranchwiseAttendance } from "./attendance-components/YoyBranchwiseAttendance";
 
 const Page = () => {
   return (
@@ -40,7 +42,10 @@ const Page = () => {
               </Link>
             </Button>
           </div>
-          <div>{/* Attendance Content */}</div>
+          <div className="my-6 space-y-4 lg:grid lg:space-y-0 grid-cols-2 gap-4">
+            <BranchwiseAttendance />
+            <YoyBranchwiseAttendance />
+          </div>
         </TabsContent>
       </Tabs>
     </ContentLayout>
