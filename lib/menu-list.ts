@@ -61,6 +61,11 @@ export function getMenuList(pathname: string, userRole: string): Group[] {
               label: "Teachers",
               icon: Group,
             },
+            {
+              href: "/admin/metrics/reports",
+              label: "Reports",
+              icon: Bookmark,
+            },
           ],
         },
         {
