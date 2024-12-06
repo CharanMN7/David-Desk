@@ -93,6 +93,12 @@ export function getMenuList(pathname: string, userRole: string): Group[] {
           icon: Box,
           submenus: [],
         },
+        {
+          href: "/admin/manage",
+          label: "Manage",
+          icon: Settings,
+          submenus: [],
+        },
       ],
     },
   ];
