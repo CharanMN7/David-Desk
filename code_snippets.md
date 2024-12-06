@@ -4,7 +4,7 @@ Frequently used code snippets.
 
 
 ```js
-// empty pages
+// empty page
 import { ContentLayout } from "@/components/admin-panel/content-layout";
 
 const Page = () => {
