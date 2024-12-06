@@ -100,9 +100,15 @@ export function getMenuList(pathname: string, userRole: string): Group[] {
       groupLabel: "",
       menus: [
         {
-          href: "/dashboard",
+          href: "/teacher/dashboard",
           label: "Dashboard",
           icon: LayoutGrid,
+          submenus: [],
+        },
+        {
+          href: "/teacher/classrooms",
+          label: "Classrooms",
+          icon: Tag,
           submenus: [],
         },
       ],
