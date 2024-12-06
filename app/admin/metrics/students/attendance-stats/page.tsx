@@ -6,7 +6,7 @@ import Link from "next/link";
 const Page = () => {
   return (
     <ContentLayout title="Faculty Metrics">
-      <div className="flex gap-4 items-center">
+      <div className="flex gap-4 items-end">
         <Button size="icon" variant="outline" asChild>
           <Link href="/admin/metrics/students/">
             <ChevronLeft />
