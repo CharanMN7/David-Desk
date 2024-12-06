@@ -13,6 +13,8 @@ import {
   MessageCircleQuestion,
   Info,
   Box,
+  Bot,
+  MessageCircleQuestionIcon,
 } from "lucide-react";
 
 type Submenu = {
@@ -120,9 +122,27 @@ export function getMenuList(pathname: string, userRole: string): Group[] {
       groupLabel: "",
       menus: [
         {
-          href: "/dashboard",
+          href: "/student/dashboard",
           label: "Dashboard",
           icon: LayoutGrid,
+          submenus: [],
+        },
+        {
+          href: "/student/classroom",
+          label: "Classroom",
+          icon: Tag,
+          submenus: [],
+        },
+        {
+          href: "/student/david",
+          label: "David",
+          icon: Bot,
+          submenus: [],
+        },
+        {
+          href: "/student/quiz",
+          label: "Quiz",
+          icon: MessageCircleQuestionIcon,
           submenus: [],
         },
       ],
