@@ -28,7 +28,7 @@ const Page = () => {
   return (
     <ContentLayout title="Classrooms">
       <p className="text-muted-foreground">View all your classrooms here:</p>
-      <div className="flex flex-wrap gap-4 my-4">
+      <div className="flex flex-wrap gap-4 my-4 justify-center md:justify-start">
         {dummyData.map((data, index) => (
           <ClassroomCard key={index} {...data} />
         ))}

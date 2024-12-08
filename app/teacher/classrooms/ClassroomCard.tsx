@@ -19,7 +19,7 @@ const ClassroomCard = ({
   batch: string;
 }) => {
   return (
-    <Card className="w-fit flex flex-row gap-4 items-center justify-center">
+    <Card className="w-fit flex flex-row items-center justify-center">
       <CardHeader>
         <CardTitle>
           {branch.toUpperCase()} - {section.toUpperCase()}
