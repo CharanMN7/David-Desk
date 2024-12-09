@@ -16,6 +16,7 @@ import {
   Bot,
   MessageCircleQuestionIcon,
 } from "lucide-react";
+import { Label } from "recharts";
 
 type Submenu = {
   href: string;
@@ -119,6 +120,12 @@ export function getMenuList(pathname: string, userRole: string): Group[] {
           icon: Tag,
           submenus: [],
         },
+        {
+          href: "/teacher/announcements",
+          label: "Announcements",
+          icon: MessageCircleQuestion,
+          submenus: [],
+        },
       ],
     },
   ];
@@ -149,6 +156,13 @@ export function getMenuList(pathname: string, userRole: string): Group[] {
           href: "/student/quiz",
           label: "Quiz",
           icon: MessageCircleQuestionIcon,
+          submenus: [],
+        },
+        ,
+        {
+          href: "/student/announcements",
+          label: "Announcements",
+          icon: MessageCircleQuestion,
           submenus: [],
         },
       ],
