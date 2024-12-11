@@ -95,6 +95,12 @@ export function getMenuList(pathname: string, userRole: string): Group[] {
           submenus: [],
         },
         {
+          href: "/admin/chat-with-ai",
+          label: "Chat with AI",
+          icon: Bot,
+          submenus: [],
+        },
+        {
           href: "/admin/manage",
           label: "Manage",
           icon: Settings,
@@ -132,6 +138,12 @@ export function getMenuList(pathname: string, userRole: string): Group[] {
           submenus: [],
         },
         {
+          href: "/teacher/chat-with-ai",
+          label: "Chat with AI",
+          icon: Bot,
+          submenus: [],
+        },
+        {
           href: "/teacher/announcements",
           label: "Announcements",
           icon: MessageCircleQuestion,
@@ -158,8 +170,8 @@ export function getMenuList(pathname: string, userRole: string): Group[] {
           submenus: [],
         },
         {
-          href: "/student/david",
-          label: "David",
+          href: "/student/chat-with-ai",
+          label: "Chat with AI",
           icon: Bot,
           submenus: [],
         },
