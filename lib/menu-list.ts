@@ -115,6 +115,11 @@ export function getMenuList(pathname: string, userRole: string): Group[] {
               label: "Users",
               icon: Users,
             },
+            {
+              href: "/admin/register-faculty",
+              label: "Register Faculty",
+              icon: Users,
+            },
           ],
         },
       ],

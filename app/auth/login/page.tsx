@@ -1,10 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { useRouter } from "next/navigation";
 
 import {
   Form,
@@ -24,9 +25,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
-import { useRouter } from "next/navigation";
 
-// Improved schema with additional validation rules
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
   password: z
@@ -35,8 +34,10 @@ const formSchema = z.object({
     .regex(/[a-zA-Z0-9]/, { message: "Password must be alphanumeric" }),
 });
 
-export default function LoginPreview() {
+export default function Login() {
   const router = useRouter();
+  const supabase = createClientComponentClient();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -47,18 +48,64 @@ export default function LoginPreview() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      // Assuming an async login function
-      console.log(values);
-      toast(
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>,
-      );
-    } catch (error) {
-      console.error("Form submission error", error);
-      toast.error("Failed to submit the form. Please try again.");
+      const {
+        data: { user, session },
+        error,
+      } = await supabase.auth.signInWithPassword({
+        email: values.email,
+        password: values.password,
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      // Fetch user profile to get role
+      const { data: profile, error: profileError } = await supabase
+        .from("profiles")
+        .select("user_role")
+        .eq("id", user?.id)
+        .single();
+
+      if (profileError) {
+        throw profileError;
+      }
+
+      // Redirect based on user role
+      switch (profile.user_role) {
+        case "admin":
+          router.push("/admin/dashboard");
+          break;
+        case "teacher":
+          router.push("/teacher/dashboard");
+          break;
+        case "student":
+          router.push("/student/dashboard");
+          break;
+        default:
+          router.push("/dashboard");
+      }
+
+      toast.success("Logged in successfully");
+    } catch (error: any) {
+      console.error("Login error:", error);
+      toast.error(error.message || "Failed to login. Please try again.");
     }
   }
+
+  const handleForgotPassword = async (email: string) => {
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/auth/reset-password`,
+      });
+
+      if (error) throw error;
+
+      toast.success("Password reset link sent to your email");
+    } catch (error: any) {
+      toast.error(error.message || "Failed to send reset link");
+    }
+  };
 
   return (
     <div className="flex flex-col h-screen w-full items-center justify-center px-4">
@@ -99,12 +146,15 @@ export default function LoginPreview() {
                     <FormItem className="grid gap-2">
                       <div className="flex justify-between items-center">
                         <FormLabel htmlFor="password">Password</FormLabel>
-                        <Link
-                          href="#"
-                          className="ml-auto inline-block text-sm underline"
+                        <Button
+                          variant="link"
+                          className="px-0"
+                          onClick={() =>
+                            handleForgotPassword(form.getValues("email"))
+                          }
                         >
-                          Forgot your password?
-                        </Link>
+                          Forgot password?
+                        </Button>
                       </div>
                       <FormControl>
                         <PasswordInput
@@ -118,22 +168,12 @@ export default function LoginPreview() {
                     </FormItem>
                   )}
                 />
-                <Button
-                  type="submit"
-                  className="w-full"
-                  onClick={() => {
-                    router.push("/admin/dashboard");
-                  }}
-                >
+                <Button type="submit" className="w-full">
                   Login
                 </Button>
-                {/* <Button variant="outline" className="w-full">
-                  Login with Google
-                </Button> */}
               </div>
             </form>
           </Form>
-          {/* s */}
         </CardContent>
       </Card>
     </div>
