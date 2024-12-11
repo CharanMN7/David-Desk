@@ -1,7 +1,10 @@
-import { ContentLayout } from "@/components/admin-panel/content-layout";
+"use client";
+
+import { useRouter } from "next/navigation";
 
 const Page = () => {
-  return <ContentLayout title="Manage">Page</ContentLayout>;
+  const router = useRouter();
+  router.push("/admin/dashboard");
+  return <div>Page</div>;
 };
-
 export default Page;
