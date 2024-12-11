@@ -18,7 +18,7 @@ import { Camera } from "lucide-react";
 import { ContentLayout } from "@/components/admin-panel/content-layout";
 
 const formSchema = z.object({
-  photo: z.string(),
+  photo: z.any(), // Changed from z.string() to z.any() to handle File object
 });
 
 export default function MyForm() {
@@ -28,6 +28,9 @@ export default function MyForm() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      photo: null,
+    },
   });
 
   const startCamera = async () => {
@@ -49,15 +52,17 @@ export default function MyForm() {
       const canvas = document.createElement("canvas");
       canvas.width = videoRef.current.videoWidth;
       canvas.height = videoRef.current.videoHeight;
-      canvas.getContext("2d")?.drawImage(videoRef.current, 0, 0);
+      const context = canvas.getContext("2d");
+      if (context) {
+        context.drawImage(videoRef.current, 0, 0);
+        const jpegImage = canvas.toDataURL("image/jpeg");
+        setImagePreview(jpegImage);
+        form.setValue("photo", jpegImage); // Set the form value
 
-      // Convert to JPEG format
-      const jpegImage = canvas.toDataURL("image/jpeg");
-      setImagePreview(jpegImage);
-
-      // Stop camera stream
-      if (streamRef.current) {
-        streamRef.current.getTracks().forEach((track) => track.stop());
+        // Stop camera stream
+        if (streamRef.current) {
+          streamRef.current.getTracks().forEach((track) => track.stop());
+        }
       }
     }
   };
@@ -70,25 +75,46 @@ export default function MyForm() {
       }
 
       // Convert base64 to blob
-      const base64Response = await fetch(imagePreview);
-      const blob = await base64Response.blob();
+      const base64Data = imagePreview.split(",")[1];
+      const byteCharacters = atob(base64Data);
+      const byteNumbers = new Array(byteCharacters.length);
+
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: "image/jpeg" });
 
       // Create FormData
       const formData = new FormData();
       formData.append("photo", blob, "photo.jpg");
 
       // Send to API
-      const response = await fetch("https://google.com/", {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        "https://7a9d-103-177-203-130.ngrok-free.app/add-faculty",
+        {
+          method: "POST",
+          body: formData,
+          headers: {
+            Accept: "application/json",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,DELETE,PATCH,POST,PUT",
+            "Access-Control-Allow-Headers":
+              "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
+          },
+        },
+      );
 
-      if (response.ok) {
-        toast.success("Photo uploaded successfully");
-      } else {
-        throw new Error("Upload failed");
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+
+      const data = await response.json();
+      toast.success("Photo uploaded successfully");
     } catch (error) {
+      console.error("Upload error:", error);
       toast.error("Failed to upload photo");
     }
   };
