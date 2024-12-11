@@ -98,7 +98,18 @@ export function getMenuList(pathname: string, userRole: string): Group[] {
           href: "/admin/manage",
           label: "Manage",
           icon: Settings,
-          submenus: [],
+          submenus: [
+            {
+              href: "/admin/manage/leaves",
+              label: "Leaves",
+              icon: SquarePen,
+            },
+            {
+              href: "/admin/manage/users",
+              label: "Users",
+              icon: Users,
+            },
+          ],
         },
       ],
     },
