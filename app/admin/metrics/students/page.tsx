@@ -18,14 +18,7 @@ const Page = () => {
           <TabsTrigger value="attendance">Attendance</TabsTrigger>
         </TabsList>
         <TabsContent value="grades">
-          <div className="flex justify-between border p-4 my-4 rounded-xl">
-            <h2 className="text-2xl font-semibold">Grades</h2>
-            <Button asChild>
-              <Link href="/admin/metrics/students/grade-stats">
-                More Actions <ChevronRight />
-              </Link>
-            </Button>
-          </div>
+          
           <div className="my-6 space-y-4 lg:grid lg:space-y-0 grid-cols-2 gap-4">
             <PassFailPercentage />
             <BranchwiseGrades className="h-full" />
