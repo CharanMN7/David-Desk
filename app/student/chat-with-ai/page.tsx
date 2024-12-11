@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { useChat } from "ai/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,30 +11,26 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { supabase } from "@/lib/supabaseClient";
-import { AuthButton } from "@/components/auth-button";
 import { ContentLayout } from "@/components/admin-panel/content-layout";
+import ReactMarkdown from "react-markdown";
+import "./markdown-styles.css";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
-  const [user, setUser] = useState<any>(null);
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     api: "/api/chat",
   });
 
-  useEffect(() => {
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setUser(session?.user ?? null);
-      },
-    );
+  const session = supabase.auth.getSession();
+  const router = useRouter();
 
-    return () => {
-      authListener.subscription.unsubscribe();
-    };
-  }, []);
+  if (!session) {
+    router.push("/auth/login");
+  }
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!user) {
+    if (!session) {
       alert("Please sign in to use the chatbot");
       return;
     }
@@ -44,44 +39,46 @@ const Page = () => {
 
   return (
     <ContentLayout title="Chat with AI">
-      <Card className="w-full max-w-2xl mx-auto mt-8">
-        <CardHeader>
+      <Card className="w-full mx-auto mt-8 text-xs lg:text-base">
+        {/* <CardHeader>
           <CardTitle>Gemini AI Chatbot</CardTitle>
-        </CardHeader>
-        {user ? (
-          <>
-            <CardContent className="h-[60vh] overflow-y-auto">
-              {messages.map((m) => (
-                <div
-                  key={m.id}
-                  className={`mb-4 ${m.role === "user" ? "text-right" : "text-left"}`}
-                >
-                  <span
-                    className={`inline-block p-2 rounded-lg ${m.role === "user" ? "bg-blue-500 text-white" : "bg-gray-200 text-black"}`}
-                  >
+        </CardHeader> */}
+
+        <CardContent className="h-[70vh] overflow-y-auto">
+          {messages.map((m) => (
+            <div
+              key={m.id}
+              className={`mb-4 ${m.role === "user" ? "text-right" : "text-left"}`}
+            >
+              <div
+                className={`inline-block p-2 rounded-lg ${m.role === "user" ? "bg-blue-500 text-white" : "bg-muted-background text-black"}`}
+              >
+                {m.role === "user" ? (
+                  m.content
+                ) : (
+                  <ReactMarkdown className="markdown-content">
                     {m.content}
-                  </span>
-                </div>
-              ))}
-            </CardContent>
-            <CardFooter>
-              <form onSubmit={onSubmit} className="flex w-full space-x-2">
-                <Input
-                  value={input}
-                  onChange={handleInputChange}
-                  placeholder="Type your message..."
-                  className="flex-grow"
-                />
-                <Button type="submit">Send</Button>
-              </form>
-            </CardFooter>
-          </>
-        ) : (
-          <CardContent>
+                  </ReactMarkdown>
+                )}
+              </div>
+            </div>
+          ))}
+        </CardContent>
+        <CardFooter className="pt-6">
+          <form onSubmit={onSubmit} className="flex w-full space-x-2">
+            <Input
+              value={input}
+              onChange={handleInputChange}
+              placeholder="ask me anything..."
+              className="flex-grow"
+            />
+            <Button type="submit">Send</Button>
+          </form>
+        </CardFooter>
+        {/* <CardContent>
             <p className="mb-4">Please sign in to use the chatbot</p>
             <AuthButton />
-          </CardContent>
-        )}
+          </CardContent> */}
       </Card>
     </ContentLayout>
   );
