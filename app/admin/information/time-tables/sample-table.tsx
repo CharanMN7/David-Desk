@@ -6,7 +6,6 @@ import {
   TableBody,
   TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -30,10 +29,23 @@ interface TimetableData {
 
 export function TimeTableDemo({ branch }: { branch: string }) {
   const [timetables, setTimetables] = useState<TimetableData[]>([]);
-  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const days = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
   const times = [
-    "9:00-10:00", "10:00-11:00", "11:00-12:00", "12:00-13:00", 
-    "13:00-14:00", "14:00-15:00", "15:00-16:00", "16:00-17:00"
+    "9:00-10:00",
+    "10:00-11:00",
+    "11:00-12:00",
+    "12:00-13:00",
+    "13:00-14:00",
+    "14:00-15:00",
+    "15:00-16:00",
+    "16:00-17:00",
   ];
 
   useEffect(() => {
@@ -53,39 +65,48 @@ export function TimeTableDemo({ branch }: { branch: string }) {
 
   return (
     <TooltipProvider>
-      <Table className="border-2 border-gray-200">
+      <Table className="border rounded-md">
         <TableCaption>Weekly Timetable for {branch}</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="border border-gray-200 font-bold">Day</TableHead>
+            <TableHead className="">Day</TableHead>
             {times.map((time) => (
-              <TableHead key={time} className="border border-gray-200 font-bold">{time}</TableHead>
+              <TableHead key={time} className="">
+                {time}
+              </TableHead>
             ))}
           </TableRow>
         </TableHeader>
         <TableBody>
           {timetables.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={times.length + 1} className="border border-gray-200">No data available</TableCell>
+              <TableCell colSpan={times.length + 1} className="">
+                No data available
+              </TableCell>
             </TableRow>
           ) : (
             days.map((day) => (
               <TableRow key={day}>
-                <TableCell className="border border-gray-200 font-semibold">{day}</TableCell>
+                <TableCell className=" font-semibold">{day}</TableCell>
                 {times.map((timeSlot) => {
-                  const classData = timetables.find(
-                    (dayData) => dayData.day.toLowerCase() === day.toLowerCase()
-                  )?.classes.find((classData) => classData.time === timeSlot);
+                  const classData = timetables
+                    .find(
+                      (dayData) =>
+                        dayData.day.toLowerCase() === day.toLowerCase(),
+                    )
+                    ?.classes.find((classData) => classData.time === timeSlot);
                   return (
-                    <TableCell key={timeSlot} className="border border-gray-200">
+                    <TableCell key={timeSlot} className="">
                       {classData ? (
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <div className="cursor-help">
-                              <div className="font-medium">{classData.subject_name}</div>
+                              <div className="font-medium">
+                                {classData.subject_name}
+                              </div>
                             </div>
                           </TooltipTrigger>
-                          <TooltipContent className="border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-lg">
+                          <TooltipContent className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-lg">
                             <p>Teacher: {classData.teacher_name || "N/A"}</p>
                             <p>Room: {classData.room}</p>
                           </TooltipContent>
@@ -104,4 +125,3 @@ export function TimeTableDemo({ branch }: { branch: string }) {
     </TooltipProvider>
   );
 }
-
