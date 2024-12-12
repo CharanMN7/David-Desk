@@ -28,12 +28,12 @@ export async function middleware(req: NextRequest) {
   if (path.startsWith("/admin") && role !== "admin") {
     return NextResponse.redirect(new URL("/unauthorized", req.url));
   }
-  // if (path.startsWith("/teacher") && role !== "teacher") {
-  //   return NextResponse.redirect(new URL("/unauthorized", req.url));
-  // }
-  // if (path.startsWith("/student") && role !== "student") {
-  //   return NextResponse.redirect(new URL("/unauthorized", req.url));
-  // }
+  if (path.startsWith("/teacher") && role !== "teacher") {
+    return NextResponse.redirect(new URL("/unauthorized", req.url));
+  }
+  if (path.startsWith("/student") && role !== "student") {
+    return NextResponse.redirect(new URL("/unauthorized", req.url));
+  }
 
   return res;
 }

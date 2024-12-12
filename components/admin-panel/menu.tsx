@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Ellipsis, LogOut } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { getMenuList } from "@/lib/menu-list";
@@ -15,6 +15,7 @@ import {
   TooltipContent,
   TooltipProvider,
 } from "@/components/ui/tooltip";
+import { supabase } from "@/lib/supabaseClient";
 
 interface MenuProps {
   isOpen: boolean | undefined;
@@ -32,6 +33,7 @@ export function Menu({ isOpen }: MenuProps) {
           ? "student"
           : "",
   );
+  const router = useRouter();
 
   return (
     <ScrollArea className="[&>div>div[style]]:!block">
@@ -127,7 +129,13 @@ export function Menu({ isOpen }: MenuProps) {
               <Tooltip delayDuration={100}>
                 <TooltipTrigger asChild>
                   <Button
-                    onClick={() => {}}
+                    onClick={() => {
+                      const { error } = supabase.auth.signOut();
+                      if (error) {
+                        console.error(error);
+                      }
+                      router.push("/auth/login");
+                    }}
                     variant="outline"
                     className="w-full justify-center h-10 mt-5"
                   >

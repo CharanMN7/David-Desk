@@ -18,7 +18,7 @@ import { Camera } from "lucide-react";
 import { ContentLayout } from "@/components/admin-panel/content-layout";
 
 const formSchema = z.object({
-  photo: z.any(), // Changed from z.string() to z.any() to handle File object
+  face: z.any(), // Changed from z.string() to z.any() to handle File object
 });
 
 export default function MyForm() {
@@ -29,7 +29,7 @@ export default function MyForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      photo: null,
+      face: null,
     },
   });
 
@@ -57,7 +57,7 @@ export default function MyForm() {
         context.drawImage(videoRef.current, 0, 0);
         const jpegImage = canvas.toDataURL("image/jpeg");
         setImagePreview(jpegImage);
-        form.setValue("photo", jpegImage); // Set the form value
+        form.setValue("face", jpegImage); // Set the form value
 
         // Stop camera stream
         if (streamRef.current) {
@@ -67,8 +67,11 @@ export default function MyForm() {
     }
   };
 
+  const [loading, setLoading] = useState(false);
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
+      setLoading(false);
       if (!imagePreview) {
         toast.error("Please capture a photo first");
         return;
@@ -88,34 +91,47 @@ export default function MyForm() {
 
       // Create FormData
       const formData = new FormData();
-      formData.append("photo", blob, "photo.jpg");
+      formData.append("face", blob, "face.jpg");
 
-      // Send to API
+      // console.log(
+      //   "Sending request to:",
+      //   "https://f793-103-177-203-130.ngrok-free.app/add-faculty/",
+      // );
+      console.log("Request payload:", formData);
+
       const response = await fetch(
-        "https://7a9d-103-177-203-130.ngrok-free.app/add-faculty",
+        "https://1147-103-177-203-130.ngrok-free.app/add-faculty/",
         {
           method: "POST",
           body: formData,
+          credentials: "include",
+          mode: "cors",
           headers: {
             Accept: "application/json",
-            "Access-Control-Allow-Credentials": "true",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET,DELETE,PATCH,POST,PUT",
-            "Access-Control-Allow-Headers":
-              "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
           },
         },
       );
 
+      console.log("Response status:", response.status);
+      console.log(
+        "Response headers:",
+        Object.fromEntries(response.headers.entries()),
+      );
+
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        console.error("Error response:", errorText);
+        throw new Error(
+          `HTTP error! status: ${response.status}, message: ${errorText}`,
+        );
       }
 
       const data = await response.json();
-      toast.success("Photo uploaded successfully");
+      console.log("Success response:", data);
+      toast.success("Faculty registered successfully!");
     } catch (error) {
       console.error("Upload error:", error);
-      toast.error("Failed to upload photo");
+      toast.error(`Failed to upload: ${error.message}`);
     }
   };
 
@@ -128,7 +144,7 @@ export default function MyForm() {
         >
           <FormField
             control={form.control}
-            name="photo"
+            name="face"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Take Photo</FormLabel>
