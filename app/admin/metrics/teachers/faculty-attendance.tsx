@@ -20,12 +20,12 @@ import {
 
 // Example data
 const chartData = [
-  { faculty: "Dr. Anil Kumar", attendance: 75 },
-  { faculty: "Dr. Sarah Johnson", attendance: 85 },
-  { faculty: "Prof. Swati Desai", attendance: 90 },
-  { faculty: "Dr. Sushmita Rao", attendance: 80 },
-  { faculty: "Dr. Rajesh Khanna", attendance: 88 },
-  { faculty: "Dr. Pooja Verma", attendance: 95 },
+  { faculty: "Anil", attendance: 75 },
+  { faculty: "Sarah", attendance: 85 },
+  { faculty: "Swati", attendance: 90 },
+  { faculty: "Sushmita", attendance: 80 },
+  { faculty: "Rajesh", attendance: 88 },
+  { faculty: "Verma", attendance: 95 },
 ];
 
 const chartConfig = {

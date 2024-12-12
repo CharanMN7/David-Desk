@@ -1,6 +1,8 @@
 import { ModeToggle } from "@/components/mode-toggle";
 import { UserNav } from "@/components/admin-panel/user-nav";
 import { SheetMenu } from "@/components/admin-panel/sheet-menu";
+import { AlarmClock, AlertCircleIcon } from "lucide-react";
+import { Button } from "../ui/button";
 
 interface NavbarProps {
   title: string;
@@ -15,6 +17,10 @@ export function Navbar({ title }: NavbarProps) {
           <h1 className="font-bold">{title}</h1>
         </div>
         <div className="flex items-center gap-4 justify-end">
+          <Button variant="destructive" 
+            className="relative h-8 w-8 rounded-full" >
+              <AlertCircleIcon/>
+            </Button>
           <ModeToggle />
           <UserNav />
         </div>

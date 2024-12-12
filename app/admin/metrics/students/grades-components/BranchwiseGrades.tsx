@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { TrendingUp } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
@@ -18,14 +19,41 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-const chartData = [
-  { branch: "CSE", average_grade: 82 },
-  { branch: "ECE", average_grade: 75 },
-  { branch: "EEE", average_grade: 73 },
-  { branch: "MECH", average_grade: 68 },
-  { branch: "CIVIL", average_grade: 80 },
-  { branch: "IT", average_grade: 88 },
-];
+// Sample data for different batches
+const chartDataMap = {
+  "2021-2025": [
+    { branch: "CSE", average_grade: 82 },
+    { branch: "ECE", average_grade: 75 },
+    { branch: "EEE", average_grade: 73 },
+    { branch: "MECH", average_grade: 68 },
+    { branch: "CIVIL", average_grade: 80 },
+    { branch: "IT", average_grade: 88 },
+  ],
+  "2022-2026": [
+    { branch: "CSE", average_grade: 78 },
+    { branch: "ECE", average_grade: 70 },
+    { branch: "EEE", average_grade: 76 },
+    { branch: "MECH", average_grade: 65 },
+    { branch: "CIVIL", average_grade: 82 },
+    { branch: "IT", average_grade: 85 },
+  ],
+  "2023-2027": [
+    { branch: "CSE", average_grade: 80 },
+    { branch: "ECE", average_grade: 72 },
+    { branch: "EEE", average_grade: 74 },
+    { branch: "MECH", average_grade: 70 },
+    { branch: "CIVIL", average_grade: 78 },
+    { branch: "IT", average_grade: 90 },
+  ],
+  "2024-2028": [
+    { branch: "CSE", average_grade: 85 },
+    { branch: "ECE", average_grade: 77 },
+    { branch: "EEE", average_grade: 71 },
+    { branch: "MECH", average_grade: 69 },
+    { branch: "CIVIL", average_grade: 81 },
+    { branch: "IT", average_grade: 89 },
+  ],
+};
 
 const chartConfig = {
   average_grade: {
@@ -35,6 +63,14 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function BranchwiseGrades({ ...props }) {
+  const [selectedBatch, setSelectedBatch] = useState("2021-2025");
+  
+  const handleBatchChange = (event) => {
+    setSelectedBatch(event.target.value);
+  };
+
+  const chartData = chartDataMap[selectedBatch];
+
   return (
     <Card {...props}>
       <CardHeader>
@@ -42,6 +78,22 @@ export function BranchwiseGrades({ ...props }) {
         <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
       <CardContent>
+        <div className="mb-4">
+          <label htmlFor="batch" className="block text-sm font-medium text-gray-700">
+            Select Batch
+          </label>
+          <select
+            id="batch"
+            value={selectedBatch}
+            onChange={handleBatchChange}
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-500"
+          >
+            <option value="2021-2025">2021-2025</option>
+            <option value="2022-2026">2022-2026</option>
+            <option value="2023-2027">2023-2027</option>
+            <option value="2024-2028">2024-2028</option>
+          </select>
+        </div>
         <ChartContainer config={chartConfig}>
           <BarChart
             accessibilityLayer
@@ -71,7 +123,7 @@ export function BranchwiseGrades({ ...props }) {
           Branch-wise Grades <TrendingUp className="h-4 w-4" />
         </div>
         <div className="leading-none text-muted-foreground">
-          Average grades for each branch in the first half of 2024.
+          Average grades for each branch in the first half of the selected batch.
         </div>
       </CardFooter>
     </Card>
