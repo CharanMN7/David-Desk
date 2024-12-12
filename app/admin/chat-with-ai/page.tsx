@@ -32,7 +32,13 @@ const Page = () => {
         if (currentConversationId) {
           supabase
             .from("conversations")
-            .update({ conversation: [...messages, message] })
+            .update({
+              conversation: [
+                "You are an AI assistant to assist admins of an educational institution help understand their data, take data-driven decisions and make informed decisions. Answer all he questions professionally, and if you encounter any data, analyze it, think about the data mathematically, try to reason, and give your answer.",
+                ...messages,
+                message,
+              ],
+            })
             .eq("id", currentConversationId);
         }
       },

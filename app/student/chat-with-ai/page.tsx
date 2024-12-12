@@ -49,15 +49,16 @@ const Page = () => {
       console.log("Sending form data with query:", input);
 
       // Send message to API
-      const url = `https://877a-2409-40d0-be-847-fd78-6420-a203-df54.ngrok-free.app`;
+      const url = `https://ebb6-103-177-203-130.ngrok-free.app`;
       const response = await fetch(`${url}/chat`, {
         method: "POST",
         body: formData, // Send as FormData
       });
 
       // Log the raw response
-      const responseText = await response.text();
-      console.log("Raw response:", responseText);
+      const responseText = await response.json();
+      const responseTextString = JSON.parse(responseText)["answer"];
+      console.log("Raw response:", responseTextString);
 
       if (!response.ok) {
         console.error("API Error:", {
@@ -69,12 +70,12 @@ const Page = () => {
       }
 
       // Parse the response text
-      const data = JSON.parse(responseText);
+      const data = responseTextString;
 
       // Add AI response to the conversation
       const aiMessage = {
         role: "assistant",
-        content: data.response,
+        content: data,
         id: Date.now() + 1,
       };
       setMessages((prev) => [...prev, aiMessage]);
@@ -126,7 +127,7 @@ const Page = () => {
 
         <CardContent className="space-y-4">
           <div className="flex justify-between items-center p-4">
-            <ConversationDropdown onSelect={loadConversation} />
+            {/* <ConversationDropdown onSelect={loadConversation} /> */}
             <Button onClick={startNewConversation}>New Conversation</Button>
           </div>
           <div className="h-[60vh] overflow-y-auto">
