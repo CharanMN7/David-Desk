@@ -1,9 +1,10 @@
 import { ContentLayout } from "@/components/admin-panel/content-layout";
+import LeavePageDashboard from "./leaves-page";
 
 const Page = () => {
   return (
     <ContentLayout title="Manage Leaves">
-      <h2 className="text-2xl font-semibold">Leave Requests</h2>
+            <LeavePageDashboard/>
     </ContentLayout>
   );
 };
