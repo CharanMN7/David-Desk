@@ -18,7 +18,6 @@ const Page = () => {
           <TabsTrigger value="attendance">Attendance</TabsTrigger>
         </TabsList>
         <TabsContent value="grades">
-          
           <div className="my-6 space-y-4 lg:grid lg:space-y-0 grid-cols-2 gap-4">
             <PassFailPercentage />
             <BranchwiseGrades className="h-full" />

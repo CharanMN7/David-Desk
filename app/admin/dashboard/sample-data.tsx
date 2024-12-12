@@ -55,16 +55,6 @@ export type Student = {
 
 export const columns: ColumnDef<Student>[] = [
   {
-    accessorKey: "rank",
-    header: "Rank",
-    cell: ({ row }) => row.getValue("rank"),
-  },
-  {
-    accessorKey: "roll_no",
-    header: "Roll No",
-    cell: ({ row }) => row.getValue("roll_no"),
-  },
-  {
     accessorKey: "first_name",
     header: "First Name",
     cell: ({ row }) => row.getValue("first_name"),
@@ -80,32 +70,52 @@ export const columns: ColumnDef<Student>[] = [
     cell: ({ row }) => row.getValue("cgpa"),
   },
   {
-    accessorKey: "attendance_percentage",
-    header: "Attendance (%)",
-    cell: ({ row }) => row.getValue("attendance_percentage"),
-  },
-  {
-    accessorKey: "extracurricular_count",
-    header: "Extracurriculars",
-    cell: ({ row }) => row.getValue("extracurricular_count"),
-  },
-  {
-    accessorKey: "awards_count",
-    header: "Awards",
-    cell: ({ row }) => row.getValue("awards_count"),
+    accessorKey: "guardian_email",
+    header: "Guardian",
+    cell: ({ row, table }) => {
+      const guardianEmails = (table.options.meta as any)?.guardianEmails || [];
+      return guardianEmails[row.index] || "";
+    },
   },
 ];
 
 export function DataTableDemo() {
   const [data, setData] = React.useState<Student[]>([]);
   const [loading, setLoading] = React.useState<boolean>(true);
+  const [guardian_emails, setGuardian_emails] = React.useState([
+    "charanmanikantanalla@gmail.com",
+    "nV9mU@example.com",
+    "V9c9V@example.com",
+    "1MfQF@example.com",
+    "B0h9t@example.com",
+    "d1Zd6@example.com",
+    "nV9mU@example.com",
+    "V9c9V@example.com",
+    "1MfQF@example.com",
+    "B0h9t@example.com",
+    "d1Zd6@example.com",
+    "nV9mU@example.com",
+    "V9c9V@example.com",
+    "1MfQF@example.com",
+    "B0h9t@example.com",
+    "d1Zd6@example.com",
+    "nV9mU@example.com",
+    "V9c9V@example.com",
+    "1MfQF@example.com",
+  ]);
 
   React.useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("https://api.example.com/rankings");
+        const response = await fetch(
+          "https://david-backend-production.up.railway.app/students/rankings",
+        );
         const result = await response.json();
-        setData(result.data.rankings); // Adjust based on the API structure
+        const rankings = result.data.rankings;
+        setData(rankings);
+        setGuardian_emails((prevEmails) =>
+          prevEmails.slice(0, rankings.length),
+        );
         setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -117,7 +127,7 @@ export function DataTableDemo() {
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
+    [],
   );
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -126,6 +136,9 @@ export function DataTableDemo() {
   const table = useReactTable({
     data,
     columns,
+    meta: {
+      guardianEmails: guardian_emails,
+    },
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -151,7 +164,9 @@ export function DataTableDemo() {
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter by name..."
-          value={(table.getColumn("first_name")?.getFilterValue() as string) ?? ""}
+          value={
+            (table.getColumn("first_name")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) =>
             table.getColumn("first_name")?.setFilterValue(event.target.value)
           }
@@ -172,9 +187,7 @@ export function DataTableDemo() {
                   key={column.id}
                   className="capitalize"
                   checked={column.getIsVisible()}
-                  onCheckedChange={(value) =>
-                    column.toggleVisibility(!!value)
-                  }
+                  onCheckedChange={(value) => column.toggleVisibility(!!value)}
                 >
                   {column.id}
                 </DropdownMenuCheckboxItem>
@@ -193,7 +206,7 @@ export function DataTableDemo() {
                       ? null
                       : flexRender(
                           header.column.columnDef.header,
-                          header.getContext()
+                          header.getContext(),
                         )}
                   </TableHead>
                 ))}
@@ -211,7 +224,7 @@ export function DataTableDemo() {
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}
@@ -219,7 +232,10 @@ export function DataTableDemo() {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
                   No results.
                 </TableCell>
               </TableRow>
