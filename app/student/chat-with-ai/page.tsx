@@ -1,6 +1,5 @@
 "use client";
 
-import { useChat } from "ai/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
@@ -24,31 +23,76 @@ const Page = () => {
     string | null
   >(null);
 
-  const { messages, input, handleInputChange, handleSubmit, setMessages } =
-    useChat({
-      api: "/api/chat",
-      onFinish: (message) => {
-        // Update the conversation in Supabase after each message
-        if (currentConversationId) {
-          supabase
-            .from("conversations")
-            .update({ conversation: [...messages, message] })
-            .eq("id", currentConversationId);
-        }
-      },
-    });
+  const [messages, setMessages] = useState<any[]>([]);
+  const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!session) {
-      alert("Please sign in to use the chatbot");
-      return;
-    }
-    handleSubmit(e);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
   };
 
-  const url =
-    "https://877a-2409-40d0-be-847-fd78-6420-a203-df54.ngrok-free.app";
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!input.trim()) return;
+
+    try {
+      setIsLoading(true);
+      // Add user message to the conversation
+      const userMessage = { role: "user", content: input, id: Date.now() };
+      setMessages((prev) => [...prev, userMessage]);
+      setInput("");
+
+      // Prepare request body using FormData
+      const formData = new FormData();
+      formData.append("query", input);
+
+      console.log("Sending form data with query:", input);
+
+      // Send message to API
+      const url = `https://877a-2409-40d0-be-847-fd78-6420-a203-df54.ngrok-free.app`;
+      const response = await fetch(`${url}/chat`, {
+        method: "POST",
+        body: formData, // Send as FormData
+      });
+
+      // Log the raw response
+      const responseText = await response.text();
+      console.log("Raw response:", responseText);
+
+      if (!response.ok) {
+        console.error("API Error:", {
+          status: response.status,
+          statusText: response.statusText,
+          body: responseText,
+        });
+        throw new Error(`Failed to get response: ${responseText}`);
+      }
+
+      // Parse the response text
+      const data = JSON.parse(responseText);
+
+      // Add AI response to the conversation
+      const aiMessage = {
+        role: "assistant",
+        content: data.response,
+        id: Date.now() + 1,
+      };
+      setMessages((prev) => [...prev, aiMessage]);
+
+      // Update conversation in Supabase if there's a current conversation
+      if (currentConversationId) {
+        await supabase
+          .from("conversations")
+          .update({ conversation: [...messages, userMessage, aiMessage] })
+          .eq("id", currentConversationId);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Failed to get response from AI");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const loadConversation = async (conversationId: string) => {
     const { data, error } = await supabase
@@ -107,14 +151,16 @@ const Page = () => {
           </div>
         </CardContent>
         <CardFooter className="pt-6">
-          <form onSubmit={onSubmit} className="flex w-full space-x-2">
+          <form onSubmit={handleSubmit} className="flex w-full gap-2">
             <Input
               value={input}
               onChange={handleInputChange}
-              placeholder="ask me anything..."
-              className="flex-grow"
+              placeholder="Type your message..."
+              disabled={isLoading}
             />
-            <Button type="submit">Send</Button>
+            <Button type="submit" disabled={isLoading}>
+              Send
+            </Button>
           </form>
         </CardFooter>
       </Card>

@@ -35,6 +35,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import Link from "next/link";
 
 export type Student = {
   id: number;
@@ -74,7 +75,41 @@ export const columns: ColumnDef<Student>[] = [
     header: "Guardian",
     cell: ({ row, table }) => {
       const guardianEmails = (table.options.meta as any)?.guardianEmails || [];
-      return guardianEmails[row.index] || "";
+      return (
+        <Button
+          variant="link"
+          onClick={async () => {
+            try {
+              const response = await fetch(
+                `https://david-backend-production.up.railway.app/send-email`,
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    to: guardianEmails[row.index],
+                    name: "Naveen",
+                    score: "23",
+                  }),
+                },
+              );
+              const result = await response.json();
+              if (!response.ok) {
+                console.error("Error sending email:", result);
+                alert("Failed to send email. Please try again.");
+              } else {
+                alert("Email sent successfully!");
+              }
+            } catch (error) {
+              console.error("Error:", error);
+              alert("Failed to send email. Please try again.");
+            }
+          }}
+        >
+          {guardianEmails[row.index]}
+        </Button>
+      );
     },
   },
 ];
