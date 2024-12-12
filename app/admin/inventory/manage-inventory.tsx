@@ -1,12 +1,10 @@
-
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, JSX } from 'react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Check, ComputerIcon, Mic2Icon, MicIcon, ProjectorIcon, X } from 'lucide-react'
-
-interface Request {
+import { Check, ComputerIcon, Mic2Icon, MicIcon, ProjectorIcon, X, SpeakerIcon, PrinterIcon } from 'lucide-react'
+type Request = {
   id: number
   faculty_name: string
   resource_type: string
@@ -16,9 +14,48 @@ interface Request {
   created_at: string
 }
 
+type Classroom = {
+  id: number
+  name: string
+  subject: string
+  faculty: string
+  time_slot: string
+  occupied: boolean
+}
+
+type Equipment = {
+  id: number
+  name: string
+  icon: JSX.Element
+  count: number
+}
+
 export default function InventoryDashboard() {
   const [requests, setRequests] = useState<Request[]>([])
   const [error, setError] = useState<string | null>(null)
+
+  const classrooms: Classroom[] = [
+    { id: 1, name: 'LH 101', subject: 'DSA', faculty: 'Dr. Rajesh Khanna ', time_slot: '10am to 11am', occupied: true },
+    { id: 2, name: 'LH 102', subject: 'AI', faculty: 'Dr. Meera Sharma', time_slot: '11am to 12pm', occupied: false },
+    { id: 3, name: 'LH 103', subject: 'OS', faculty: 'Dr. Amit Patel', time_slot: '12pm to 1pm', occupied: true },
+    { id: 4, name: 'LH 104', subject: 'DBMS', faculty: 'Dr. Kavita Nair', time_slot: '1pm to 2pm', occupied: false },
+    { id: 5, name: 'LH 105', subject: 'Networks', faculty: 'Dr. Ramesh Gupta', time_slot: '9am to 10am', occupied: true },
+    { id: 6, name: 'LH 106', subject: 'Mathematics', faculty: 'Dr. Sarah Johnson', time_slot: '2pm to 3pm', occupied: false },
+    { id: 7, name: 'LH 107', subject: 'Applied Mechanics', faculty: 'Dr. Sushmita Rao', time_slot: '3pm to 4pm', occupied: true },
+    { id: 8, name: 'LH 108', subject: 'ML', faculty: 'Dr. Alok Jain', time_slot: '4pm to 5pm', occupied: false },
+    { id: 9, name: 'LH 109', subject: 'DL', faculty: 'Prof. Swati Desai', time_slot: '3pm to 4pm', occupied: false },
+    { id: 10, name: 'LH 110', subject: 'CRYPTO', faculty: 'Dr. Vishal', time_slot: '4pm to 5pm', occupied: true },
+    { id: 11, name: 'LH 111', subject: 'DL', faculty: 'prof Swathi Desai', time_slot: '5pm to 6pm', occupied: true },
+    { id: 12, name: 'LH 112', subject: 'LLM', faculty: 'DR Khan sir', time_slot: '5pm to 6pm', occupied: true }
+  ];
+  
+  const equipment: Equipment[] = [
+    { id: 1, name: 'Projectors', icon: <ProjectorIcon />, count: 12 },
+    { id: 2, name: 'Mics', icon: <Mic2Icon />, count: 20 },
+    { id: 3, name: 'Computers', icon: <ComputerIcon />, count: 15 },
+    { id: 4, name: 'Speakers', icon: <SpeakerIcon />, count: 10 },
+    { id: 5, name: 'Printers', icon: <PrinterIcon />, count: 5 }
+  ]
 
   const fetchRequests = async () => {
     try {
@@ -35,7 +72,7 @@ export default function InventoryDashboard() {
 
       const data = await response.json()
       if (data.status && Array.isArray(data.requests)) {
-        setRequests(data.requests.filter((request: Request) => request.status === 1))
+        setRequests(data.requests.filter((request: Request) => request.status === 1 || request.status === 2 || request.status == 3))
       } else {
         throw new Error('Invalid data structure received from API')
       }
@@ -62,7 +99,7 @@ export default function InventoryDashboard() {
 
       setRequests((prevRequests) => prevRequests.filter((request) => request.id !== id))
     } catch (error) {
-      console.error(`Failed to update request status:, error`)
+      console.error('Failed to update request status:', error)
       setError('Failed to update request. Please try again.')
     }
   }
@@ -80,49 +117,65 @@ export default function InventoryDashboard() {
           </div>
 
           <div className="grid gap-6">
-            {/* Inventory Section with Action Buttons */}
+            {/* Equipment Section */}
             <section>
               <h2 className="text-lg font-semibold mb-4">Equipment</h2>
-              <div className="flex gap-4">
-                {[
-                  { id: 1, name: <ProjectorIcon />, count: 12 },
-                  { id: 2, name: <Mic2Icon />, count: 20 },
-                  { id: 3, name: <ComputerIcon />, count: 15 },
-                ].map((item) => (
+              <div className="flex gap-4 flex-wrap">
+                {equipment.map((item) => (
                   <Card key={item.id} className="w-[140px]">
                     <CardContent className="p-4 flex flex-col items-center">
                       <div className="rounded-full bg-primary/10 p-3">
-                        <span className="text-xl font-bold">{item.name}</span>
+                        {item.icon}
                       </div>
-                      <p className="text-sm mt-2">{item.count}</p>
-                      <div className="flex gap-2 mt-4">
-                      </div>
+                      <p className="text-sm mt-2 font-medium">{item.name}</p>
+                      <p className="text-sm mt-1">{item.count}</p>
                     </CardContent>
                   </Card>
                 ))}
               </div>
             </section>
+
+
             <section>
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-semibold">Classrooms</h2>
-              </div>
-              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4">
-                {Array.from({ length: 18 }).map((_, i) => (
-                  <Card key={i} className={i < 3 ? "bg-primary/5" : ""}>
-                    <CardContent className="p-4 aspect-square flex items-center justify-center">
-                      {i < 3 ? <span className="text-primary font-bold">LH{i + 1}</span> : null}
+              <h2 className="text-lg font-semibold mb-4">Classrooms</h2>
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                {classrooms.map((classroom) => (
+                  <Card
+                    key={classroom.id}
+                    className={
+                      classroom.occupied
+                        ? "bg-orange-100"
+                        : "bg-green-100"
+                    }
+                  >
+                    <CardContent className="p-4">
+                      {/* Classroom name at the top */}
+                      <p className="font-bold text-lg">{classroom.name}</p>
+
+                      {/* Subject below the name */}
+                      <p className="text-sm text-muted-foreground mb-2">
+                        {classroom.subject}
+                      </p>
+
+                      {/* Faculty name on the left and time slot on the right */}
+                      <div className="flex justify-between text-sm text-muted-foreground">
+                        <p>{classroom.faculty}</p>
+                        <p>{classroom.time_slot}</p>
+                      </div>
                     </CardContent>
                   </Card>
                 ))}
               </div>
             </section>
+
+
             {/* Active Requests Section */}
             <section>
               <h2 className="text-lg font-semibold mb-4">Active Requests</h2>
               {error && <p className="text-red-500 mb-4">{error}</p>}
-              {requests.length > 0 ? (
+              {Request.length > 0 ? (
                 <div className="grid gap-4">
-                  {requests.map((request) => (
+                  {requests.map((request: Request) => (
                     <Card key={request.id}>
                       <CardContent className="p-4 flex items-center justify-between">
                         <div>

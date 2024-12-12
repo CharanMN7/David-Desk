@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { TrendingUp } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from "recharts";
 
@@ -18,14 +19,14 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-// Example data
-const chartData = [
-  { faculty: "Anil", attendance: 75 },
-  { faculty: "Sarah", attendance: 85 },
-  { faculty: "Swati", attendance: 90 },
-  { faculty: "Sushmita", attendance: 80 },
-  { faculty: "Rajesh", attendance: 88 },
-  { faculty: "Verma", attendance: 95 },
+// Example data with branches
+const initialChartData = [
+  { faculty: "Anil", attendance: 75, branch: "CSE" },
+  { faculty: "Sarah", attendance: 85, branch: "ECE" },
+  { faculty: "Swati", attendance: 90, branch: "CSE" },
+  { faculty: "Sushmita", attendance: 80, branch: "CSM" },
+  { faculty: "Rajesh", attendance: 88, branch: "EEE" },
+  { faculty: "Verma", attendance: 95, branch: "ECE" },
 ];
 
 const chartConfig = {
@@ -36,6 +37,13 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function BarComponent() {
+  const [selectedBranch, setSelectedBranch] = useState<string>("All"); // Default to show all branches
+
+  // Filtered data based on selected branch
+  const filteredChartData = initialChartData.filter((faculty) => {
+    return selectedBranch === "All" || faculty.branch === selectedBranch;
+  });
+
   return (
     <Card>
       <CardHeader>
@@ -43,9 +51,26 @@ export function BarComponent() {
         <CardDescription>Faculty-wise Attendance Data</CardDescription>
       </CardHeader>
       <CardContent>
+        {/* Branch Filter */}
+        <div className="mb-4">
+          <label htmlFor="branch-select" className="mr-2">Select Branch:</label>
+          <select
+            id="branch-select"
+            value={selectedBranch}
+            onChange={(e) => setSelectedBranch(e.target.value)}
+            className="border rounded p-1"
+          >
+            <option value="All">All Branches</option>
+            <option value="CSE">CSE</option>
+            <option value="CSM">CSM</option>
+            <option value="ECE">ECE</option>
+            <option value="EEE">EEE</option>
+          </select>
+        </div>
+
         <ChartContainer config={chartConfig}>
           <BarChart
-            data={chartData}
+            data={filteredChartData}
             margin={{
               top: 20,
             }}
