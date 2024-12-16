@@ -140,21 +140,21 @@ export default function MyForm() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-8 max-w-3xl mx-auto py-10"
+          className="space-y-8 max-w-3xl mx-auto py-10 text-center"
         >
           <FormField
             control={form.control}
             name="face"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Take Photo</FormLabel>
+                {/* <FormLabel>Take Photo</FormLabel> */}
                 <FormControl>
                   <div className="space-y-4">
                     <video
                       ref={videoRef}
                       autoPlay
                       playsInline
-                      className="w-full rounded-lg"
+                      className="w-full rounded-lg max-h-[50vh]"
                       style={{ display: imagePreview ? "none" : "block" }}
                     />
                     {imagePreview && (
@@ -164,7 +164,7 @@ export default function MyForm() {
                         className="w-full rounded-lg"
                       />
                     )}
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 justify-center">
                       {!imagePreview ? (
                         <>
                           <Button type="button" onClick={startCamera}>
@@ -189,7 +189,7 @@ export default function MyForm() {
                     </div>
                   </div>
                 </FormControl>
-                <FormDescription>
+                <FormDescription className="text-center">
                   Use your camera to take a photo.
                 </FormDescription>
                 <FormMessage />
