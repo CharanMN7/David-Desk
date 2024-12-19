@@ -19,7 +19,12 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-const chartDataMap = {
+type ChartDataKey = "overall" | "csm" | "cse" | "ece" | "eee";
+
+const chartDataMap: Record<
+  ChartDataKey,
+  { status: string; percentage: number; fill: string }[]
+> = {
   overall: [
     { status: "Pass", percentage: 72, fill: "#28a745" },
     { status: "Fail", percentage: 28, fill: "#dc3545" },
@@ -52,12 +57,11 @@ const chartConfig = {
     color: "#dc3545",
   },
 } satisfies ChartConfig;
-
 export function PassFailPercentage({ ...props }) {
-  const [selectedFilter, setSelectedFilter] = useState("overall");
-  
-  const handleFilterChange = (event) => {
-    setSelectedFilter(event.target.value);
+  const [selectedFilter, setSelectedFilter] = useState<ChartDataKey>("overall");
+
+  const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedFilter(event.target.value as ChartDataKey);
   };
 
   const chartData = chartDataMap[selectedFilter];
@@ -70,7 +74,10 @@ export function PassFailPercentage({ ...props }) {
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <div className="mb-4">
-          <label htmlFor="filter" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="filter"
+            className="block text-sm font-medium text-gray-700"
+          >
             Filter by Category
           </label>
           <select
@@ -106,8 +113,12 @@ export function PassFailPercentage({ ...props }) {
               <Label
                 content={({ viewBox }) => {
                   if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                    const passData = chartData.find((d: { status: string; }) => d.status === "Pass");
-                    const failData = chartData.find((d: { status: string; }) => d.status === "Fail");
+                    const passData = chartData.find(
+                      (d: { status: string }) => d.status === "Pass",
+                    );
+                    const failData = chartData.find(
+                      (d: { status: string }) => d.status === "Fail",
+                    );
 
                     return (
                       <text

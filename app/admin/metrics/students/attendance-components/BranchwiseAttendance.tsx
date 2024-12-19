@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import { TrendingUp } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
@@ -20,7 +20,11 @@ import {
 } from "@/components/ui/chart";
 
 // Sample chart data for different batches
-const batchData = {
+type BatchData = {
+  [key: string]: { branch: string; attendance_percentage: number }[];
+};
+
+const batchData: BatchData = {
   "2021-2025": [
     { branch: "CSE", attendance_percentage: 90 },
     { branch: "ECE", attendance_percentage: 85 },
@@ -66,7 +70,9 @@ export function BranchwiseAttendance({ ...props }) {
   const [selectedBatch, setSelectedBatch] = useState<string>("2021-2025"); // Default batch
 
   // Function to handle batch selection change
-  const handleBatchChange = (event) => {
+  const handleBatchChange = (event: {
+    target: { value: SetStateAction<string> };
+  }) => {
     setSelectedBatch(event.target.value);
   };
 
@@ -75,7 +81,9 @@ export function BranchwiseAttendance({ ...props }) {
       <CardHeader>
         <CardTitle>Branch-wise Attendance</CardTitle>
         <CardDescription>
-          <label htmlFor="batch-select" className="mr-2">Select Batch:</label>
+          <label htmlFor="batch-select" className="mr-2">
+            Select Batch:
+          </label>
           <select
             id="batch-select"
             value={selectedBatch}

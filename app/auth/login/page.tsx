@@ -49,7 +49,7 @@ export default function Login() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       const {
-        data: { user, session },
+        data: { user },
         error,
       } = await supabase.auth.signInWithPassword({
         email: values.email,
@@ -87,9 +87,9 @@ export default function Login() {
       }
 
       toast.success("Logged in successfully");
-    } catch (error: any) {
+    } catch (error) {
       console.error("Login error:", error);
-      toast.error(error.message || "Failed to login. Please try again.");
+      toast.error("Failed to login. Please try again.");
     }
   }
 
@@ -102,8 +102,9 @@ export default function Login() {
       if (error) throw error;
 
       toast.success("Password reset link sent to your email");
-    } catch (error: any) {
-      toast.error(error.message || "Failed to send reset link");
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to send reset link");
     }
   };
 

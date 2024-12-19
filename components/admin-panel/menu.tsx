@@ -130,11 +130,13 @@ export function Menu({ isOpen }: MenuProps) {
                 <TooltipTrigger asChild>
                   <Button
                     onClick={() => {
-                      const { error } = supabase.auth.signOut();
-                      if (error) {
-                        console.error(error);
-                      }
-                      router.push("/auth/login");
+                      supabase.auth.signOut().then(({ error }) => {
+                        if (error) {
+                          console.error(error);
+                        } else {
+                          router.push("/auth/login");
+                        }
+                      });
                     }}
                     variant="outline"
                     className="w-full justify-center h-10 mt-5"

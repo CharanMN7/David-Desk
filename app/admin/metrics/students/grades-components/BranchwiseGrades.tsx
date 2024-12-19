@@ -20,7 +20,9 @@ import {
 } from "@/components/ui/chart";
 
 // Sample data for different batches
-const chartDataMap = {
+const chartDataMap: {
+  [key: string]: { branch: string; average_grade: number }[];
+} = {
   "2021-2025": [
     { branch: "CSE", average_grade: 82 },
     { branch: "ECE", average_grade: 75 },
@@ -63,9 +65,10 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function BranchwiseGrades({ ...props }) {
-  const [selectedBatch, setSelectedBatch] = useState("2021-2025");
-  
-  const handleBatchChange = (event) => {
+  const [selectedBatch, setSelectedBatch] =
+    useState<keyof typeof chartDataMap>("2021-2025");
+
+  const handleBatchChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedBatch(event.target.value);
   };
 
@@ -79,7 +82,10 @@ export function BranchwiseGrades({ ...props }) {
       </CardHeader>
       <CardContent>
         <div className="mb-4">
-          <label htmlFor="batch" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="batch"
+            className="block text-sm font-medium text-gray-700"
+          >
             Select Batch
           </label>
           <select
@@ -123,7 +129,8 @@ export function BranchwiseGrades({ ...props }) {
           Branch-wise Grades <TrendingUp className="h-4 w-4" />
         </div>
         <div className="leading-none text-muted-foreground">
-          Average grades for each branch in the first half of the selected batch.
+          Average grades for each branch in the first half of the selected
+          batch.
         </div>
       </CardFooter>
     </Card>

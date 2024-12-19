@@ -9,7 +9,13 @@ import ReactMarkdown from "react-markdown";
 import "../../markdown-styles.css";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { ConversationDropdown } from "@/components/conversations-dropdown";
+// import { ConversationDropdown } from "@/components/conversations-dropdown";
+
+interface Message {
+  role: string;
+  content: string;
+  id: number;
+}
 
 const Page = () => {
   const session = supabase.auth.getSession();
@@ -23,7 +29,7 @@ const Page = () => {
     string | null
   >(null);
 
-  const [messages, setMessages] = useState<any[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -95,23 +101,23 @@ const Page = () => {
     }
   };
 
-  const loadConversation = async (conversationId: string) => {
-    const { data, error } = await supabase
-      .from("conversations")
-      .select("conversation")
-      .eq("id", conversationId)
-      .single();
+  // const loadConversation = async (conversationId: string) => {
+  //   const { data, error } = await supabase
+  //     .from("conversations")
+  //     .select("conversation")
+  //     .eq("id", conversationId)
+  //     .single();
 
-    if (error) {
-      console.error("Error loading conversation:", error);
-      return;
-    }
+  //   if (error) {
+  //     console.error("Error loading conversation:", error);
+  //     return;
+  //   }
 
-    if (data && data.conversation) {
-      setMessages(data.conversation);
-      setCurrentConversationId(conversationId);
-    }
-  };
+  //   if (data && data.conversation) {
+  //     setMessages(data.conversation);
+  //     setCurrentConversationId(conversationId);
+  //   }
+  // };
 
   const startNewConversation = () => {
     setMessages([]);

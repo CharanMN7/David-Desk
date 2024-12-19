@@ -39,6 +39,7 @@ const Page = () => {
     initialValue: undefined,
     onError: (error) => {
       toast.error("Failed to generate quiz. Please try again.");
+      console.error(error);
       setPrompt("");
     },
     onFinish: ({ object }) => {

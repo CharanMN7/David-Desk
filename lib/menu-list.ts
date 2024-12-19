@@ -186,7 +186,6 @@ export function getMenuList(pathname: string, userRole: string): Group[] {
           icon: MessageCircleQuestionIcon,
           submenus: [],
         },
-        ,
         {
           href: "/student/announcements",
           label: "Announcements",

@@ -109,7 +109,7 @@ export default function CreateUser({ role }: CreateUserProps) {
       form.reset();
     } catch (error) {
       console.error("Error creating user:", error);
-      toast.error(error.message || "Failed to create user account");
+      toast.error("Failed to create user account");
     }
   }
 

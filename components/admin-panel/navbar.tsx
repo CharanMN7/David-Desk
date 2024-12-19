@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
 import { ModeToggle } from "@/components/mode-toggle";
 import { UserNav } from "@/components/admin-panel/user-nav";
 import { SheetMenu } from "@/components/admin-panel/sheet-menu";
-import { AlarmClock, AlertCircleIcon } from "lucide-react";
+import { AlarmClock } from "lucide-react";
 import { Button } from "../ui/button";
 
 interface NavbarProps {
@@ -21,12 +21,12 @@ async function sendNotification(title: string, description: string) {
     const response = await fetch(
       "https://david-backend-production.up.railway.app/send-notification",
       {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(notificationData),
-      }
+      },
     );
 
     if (response.ok) {
@@ -41,7 +41,10 @@ async function sendNotification(title: string, description: string) {
 
 export function Navbar({ title }: NavbarProps) {
   const handleAlarmClick = () => {
-    sendNotification("Alarm Triggered", "An alarm was triggered from the Navbar.");
+    sendNotification(
+      "Alarm Triggered",
+      "An alarm was triggered from the Navbar.",
+    );
   };
 
   return (

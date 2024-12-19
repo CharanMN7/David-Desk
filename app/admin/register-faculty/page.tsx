@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { useState, useRef } from "react";
 import { toast } from "sonner";
@@ -11,7 +12,7 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
+  // FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Camera } from "lucide-react";
@@ -43,6 +44,7 @@ export default function MyForm() {
         streamRef.current = stream;
       }
     } catch (error) {
+      console.log(error);
       toast.error("Failed to access camera");
     }
   };
@@ -131,7 +133,7 @@ export default function MyForm() {
       toast.success("Faculty registered successfully!");
     } catch (error) {
       console.error("Upload error:", error);
-      toast.error(`Failed to upload: ${error.message}`);
+      toast.error(`Failed to upload: ${error}`);
     }
   };
 
@@ -158,6 +160,7 @@ export default function MyForm() {
                       style={{ display: imagePreview ? "none" : "block" }}
                     />
                     {imagePreview && (
+                      // eslint-disable-next-line @next/next/no-img-element
                       <img
                         src={imagePreview}
                         alt="Captured photo"

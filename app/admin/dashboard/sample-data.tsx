@@ -13,17 +13,17 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+// import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
+  // DropdownMenuItem,
+  // DropdownMenuLabel,
+  // DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
@@ -35,7 +35,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import Link from "next/link";
+// import Link from "next/link";
 
 export type Student = {
   id: number;
@@ -74,7 +74,9 @@ export const columns: ColumnDef<Student>[] = [
     accessorKey: "guardian_email",
     header: "Guardian",
     cell: ({ row, table }) => {
-      const guardianEmails = (table.options.meta as any)?.guardianEmails || [];
+      const guardianEmails =
+        (table.options.meta as { guardianEmails: string[] })?.guardianEmails ||
+        [];
       return (
         <Button
           variant="link"
