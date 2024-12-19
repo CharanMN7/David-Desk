@@ -134,7 +134,11 @@ export default function CreateUser({ role }: CreateUserProps) {
                     <FormItem>
                       <FormLabel>Email</FormLabel>
                       <FormControl>
-                        <Input placeholder="email@example.com" {...field} />
+                        <Input
+                          placeholder="email@example.com"
+                          {...field}
+                          value={field.value ?? ""}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -148,7 +152,11 @@ export default function CreateUser({ role }: CreateUserProps) {
                     <FormItem>
                       <FormLabel>Username</FormLabel>
                       <FormControl>
-                        <Input placeholder="username" {...field} />
+                        <Input
+                          placeholder="username"
+                          {...field}
+                          value={field.value ?? ""}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -163,7 +171,11 @@ export default function CreateUser({ role }: CreateUserProps) {
                   <FormItem>
                     <FormLabel>Full Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Full Name" {...field} />
+                      <Input
+                        placeholder="Full Name"
+                        {...field}
+                        value={field.value ?? ""}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -178,7 +190,11 @@ export default function CreateUser({ role }: CreateUserProps) {
                     <FormItem>
                       <FormLabel>Phone Number</FormLabel>
                       <FormControl>
-                        <Input placeholder="Phone Number" {...field} />
+                        <Input
+                          placeholder="Phone Number"
+                          {...field}
+                          value={field.value ?? ""}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -192,7 +208,11 @@ export default function CreateUser({ role }: CreateUserProps) {
                     <FormItem>
                       <FormLabel>Address</FormLabel>
                       <FormControl>
-                        <Textarea placeholder="Address" {...field} />
+                        <Textarea
+                          placeholder="Address"
+                          {...field}
+                          value={field.value ?? ""}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -211,7 +231,11 @@ export default function CreateUser({ role }: CreateUserProps) {
                         <FormItem>
                           <FormLabel>Position Title</FormLabel>
                           <FormControl>
-                            <Input placeholder="Position Title" {...field} />
+                            <Input
+                              placeholder="Position Title"
+                              {...field}
+                              value={field.value ?? ""}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -225,7 +249,11 @@ export default function CreateUser({ role }: CreateUserProps) {
                         <FormItem>
                           <FormLabel>Employee ID</FormLabel>
                           <FormControl>
-                            <Input placeholder="Employee ID" {...field} />
+                            <Input
+                              placeholder="Employee ID"
+                              {...field}
+                              value={field.value ?? ""}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -241,7 +269,8 @@ export default function CreateUser({ role }: CreateUserProps) {
                         <FormLabel>Branch</FormLabel>
                         <Select
                           onValueChange={field.onChange}
-                          defaultValue={field.value}
+                          defaultValue={field.value ?? ""}
+                          value={field.value ?? ""}
                         >
                           <FormControl>
                             <SelectTrigger>
@@ -271,7 +300,11 @@ export default function CreateUser({ role }: CreateUserProps) {
                       <FormItem>
                         <FormLabel>Roll Number</FormLabel>
                         <FormControl>
-                          <Input placeholder="Roll Number" {...field} />
+                          <Input
+                            placeholder="Roll Number"
+                            {...field}
+                            value={field.value ?? ""}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -286,7 +319,8 @@ export default function CreateUser({ role }: CreateUserProps) {
                         <FormLabel>Class</FormLabel>
                         <Select
                           onValueChange={field.onChange}
-                          defaultValue={field.value}
+                          defaultValue={field.value ?? ""}
+                          value={field.value ?? ""}
                         >
                           <FormControl>
                             <SelectTrigger>
