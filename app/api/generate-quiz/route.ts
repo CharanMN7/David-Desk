@@ -8,7 +8,7 @@ export async function POST(req: Request) {
   const { prompt } = await req.json();
 
   const result = await streamObject({
-    model: google("gemini-1.5-flash-latest"),
+    model: google("gemini-1.5-pro-latest"),
     messages: [
       {
         role: "system",
